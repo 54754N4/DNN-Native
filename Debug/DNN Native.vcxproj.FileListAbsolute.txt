@@ -1,0 +1,2 @@
+C:\Users\mazen\Desktop\Workspaces\C++\DNN Native\Debug\DNN Native.exe
+C:\Users\mazen\Desktop\Workspaces\C++\DNN Native\Debug\DNN Native.pdb

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DNN Native", "DNN Native.vcxproj", "{678E3236-9B99-4627-8D29-669072706F66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{678E3236-9B99-4627-8D29-669072706F66}.Debug|x64.ActiveCfg = Debug|x64
+		{678E3236-9B99-4627-8D29-669072706F66}.Debug|x64.Build.0 = Debug|x64
+		{678E3236-9B99-4627-8D29-669072706F66}.Debug|x86.ActiveCfg = Debug|Win32
+		{678E3236-9B99-4627-8D29-669072706F66}.Debug|x86.Build.0 = Debug|Win32
+		{678E3236-9B99-4627-8D29-669072706F66}.Release|x64.ActiveCfg = Release|x64
+		{678E3236-9B99-4627-8D29-669072706F66}.Release|x64.Build.0 = Release|x64
+		{678E3236-9B99-4627-8D29-669072706F66}.Release|x86.ActiveCfg = Release|Win32
+		{678E3236-9B99-4627-8D29-669072706F66}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FD9E021-059D-4C6B-8C37-8A05A0182BA4}
+	EndGlobalSection
+EndGlobal
