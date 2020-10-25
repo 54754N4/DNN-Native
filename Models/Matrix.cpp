@@ -196,3 +196,13 @@ Matrix& Matrix::operator^(Matrix& matrix)
 {
 	return *this;
 }
+
+/* Static */
+
+Matrix& Matrix::identity(int size) 
+{
+	Matrix* result = new Matrix(size);
+	for (int i = 0, cols = result->cols; i < result->count; i++)
+		*(result->data + i) = (i/cols == i%cols) ? 1 : 0;
+	return *result;
+}

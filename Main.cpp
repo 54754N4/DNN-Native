@@ -6,17 +6,15 @@
 #include "Models\Matrix.h"
 
 int main(char* args) {
-	double data[4][4] = {
+	/*double data[4][4] = {
 		{1,2,3,4},
 		{5,6,7,8},
 		{9,10,11,12},
 		{13,14,15,16}
 	};
-
 	Matrix matrix(data);
 	Matrix matrix1(data);
-	
-	std::cout << matrix.toString() << std::endl;
+	std::cout << matrix.toString() << std::endl;*/
 	/* Test Dimensions */
 	/*long rows, cols;
 	matrix.getDimensions(&rows, &cols);
@@ -68,5 +66,7 @@ int main(char* args) {
 
 	//std::cout << (matrix + matrix).toString() << std::endl;
 	//std::cout << (matrix * matrix1).toString() << std::endl;
-	std::cout << (matrix^2).toString() << std::endl;
+	//std::cout << (matrix^2).toString() << std::endl;
+
+	std::cout << Matrix::identity(3).toString() << std::endl;
 }

@@ -42,6 +42,8 @@ public:
 	inline double& operator[](int index) const { return *(data + index); };
 	/* 2D indexing */
 	inline double& operator()(int row, int col) { return *(data + cols * row + col); };
+	/* Static */
+	static Matrix& identity(int size);
 private:
 	int rows, cols, count;
 	double* data;
