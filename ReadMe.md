@@ -1,4 +1,5 @@
 Todo :
+
 	Row/col operations:
 		addition
 		scalar multiplication
