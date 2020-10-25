@@ -144,7 +144,6 @@
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Vector.h" />
