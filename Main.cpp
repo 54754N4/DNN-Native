@@ -1,9 +1,9 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
-#include "Vector.h"
-#include "Exceptions.h"
-#include "Matrix.h"
+#include "Models\Vector.h"
+#include "Models\Exceptions.h"
+#include "Models\Matrix.h"
 
 int main(char* args) {
 	double data[4][4] = {

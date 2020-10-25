@@ -24,29 +24,29 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Matrix.cpp">
+    <ClCompile Include="Models\Matrix.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="Vector.cpp">
+    <ClCompile Include="Models\Vector.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix.h">
+    <ClInclude Include="Models\Exceptions.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
+    <ClInclude Include="Models\Matrix.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="Exceptions.h">
+    <ClInclude Include="Models\Vector.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Vector.tpp">
+    <None Include="Models\Matrix.tpp">
       <Filter>Source Files\Models</Filter>
     </None>
-    <None Include="Matrix.tpp">
+    <None Include="Models\Vector.tpp">
       <Filter>Source Files\Models</Filter>
     </None>
   </ItemGroup>
