@@ -33,6 +33,21 @@ public:
 	}
 };
 
+class VectorDimensionError : std::exception {
+	const long wrong, right;
+	std::string* message;	// Lazy loading
+public:
+	VectorDimensionError(long wrong, long right) : wrong(wrong), right(right) {}
+	~VectorDimensionError() { delete message; }
+
+	const char* what() {
+		const int length = 50;
+		char buffer[length];
+		std::snprintf(buffer, length, "Vector size is %i but should be : %i", wrong, right);
+		message = new std::string(buffer);
+		return message->c_str();
+	}
+};
 
 class VectorsDifferentDimensionError : std::exception {
 	const long first, second;

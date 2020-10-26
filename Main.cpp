@@ -1,12 +1,12 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
-#include "Models\Vector.h"
-#include "Models\Exceptions.h"
-#include "Models\Matrix.h"
+#include "Models/Vector.h"
+#include "Models/Exceptions.h"
+#include "Models/Matrix.h"
 
 int main(char* args) {
-	/*double data[4][4] = {
+	double data[4][4] = {
 		{1,2,3,4},
 		{5,6,7,8},
 		{9,10,11,12},
@@ -14,7 +14,7 @@ int main(char* args) {
 	};
 	Matrix matrix(data);
 	Matrix matrix1(data);
-	std::cout << matrix.toString() << std::endl;*/
+	//std::cout << matrix.toString() << std::endl;
 	/* Test Dimensions */
 	/*long rows, cols;
 	matrix.getDimensions(&rows, &cols);
@@ -31,13 +31,14 @@ int main(char* args) {
 	};
 	matrix.forEach(printConsumer);*/
 
-	//double (*lambdaConsumer)(long, long, double) = [](long row, long col, double value) -> double {
-	//	if (col == 0) std::cout << std::endl;
-	//	std::cout << "Element at (" << row << "," << col << ") = " << value << std::endl;
-	//	return value;	// return same value to avoid changing it 
-	//};
-	//matrix.forEachIndexed(lambdaConsumer);
-
+	auto lambdaConsumer = [&](int row, int col, double value) -> double {		// use & default-capture for references
+		if (row != 0 && col == 0) std::cout << std::endl;
+		//std::cout << "Element at (" << row << "," << col << ") = " << value << std::endl;
+		std::cout << row << "," << col << "=" << row * matrix.cols + col << "\t";
+		return value;	// return same value to avoid changing it 
+	};
+	matrix.forEachIndexed(lambdaConsumer);
+	std::cout << std::endl;
 	/*double (*incrementor)(double) = [](double value) { return value + 1; };
 	matrix.forEach(incrementor);
 	std::cout << matrix.toString() << std::endl;*/

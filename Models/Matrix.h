@@ -4,6 +4,9 @@
 class Matrix
 {
 public:
+	/* Attributes */
+	const int rows, cols, count;
+
 	/* Constructors and destructor */
 	inline Matrix();
 	Matrix(int size);
@@ -16,17 +19,21 @@ public:
 	/* Accessors */
 	inline bool isSquare();
 	inline int getRows();
-	inline int getCols();
+	int getCols();
 	inline int getCount();
-	Matrix* getDimensions(int* rows, int* cols);
+	Matrix& getDimensions(int* rows, int* cols);
 	inline double& get(int row, int col) const;
 	/* Iterators */
-	inline Matrix* forEach(double (*operation)(double));
-	inline Matrix* forEachIndexed(double (*operation)(int, int, double));
+	template<class Function>
+	Matrix& forEach(Function operation);		// input: double			| output: double
+	template<class Function>
+	Matrix& forEachIndexed(Function operation);	// input: int, int, double	| output: double
 	/* Utility methods */
-	Matrix* indexToCoords(int index, int* outRow, int* outCol);
+	Matrix& indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
 	/* Math operations */
+	inline Matrix& plusRow(Vector& row);
+	inline Matrix& plusCol(Vector& col);
 	inline Matrix& plus(Matrix& matrix);
 	inline Matrix& times(double scalar);
 	inline Matrix& minus(Matrix& matrix);
@@ -52,13 +59,11 @@ public:
 	/* Static */
 	static Matrix& identity(int size);
 private:
-	int rows, cols, count;
 	double* data;
 
 	void initialize(const double value);
 	inline int asRow(int index);
 	inline int asCol(int index);
-	std::string cryOutOfRange(int row, int col, int rows, int cols);
 };
 
 #include "Matrix.tpp"	// Include function template definition

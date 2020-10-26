@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include "Exceptions.h"
+#include "Vector.h"
 #include "Matrix.h"
 
 /* Constructors and destructor */
@@ -73,11 +74,11 @@ inline int Matrix::asCol(int index)
 	return index % cols;
 }
 
-Matrix* Matrix::indexToCoords(int index, int* outRow, int* outCol) 
+Matrix& Matrix::indexToCoords(int index, int* outRow, int* outCol) 
 {
 	*outRow = asRow(index);
 	*outCol = asCol(index);
-	return this;
+	return *this;
 }
 
 void Matrix::initialize(const double value) 
@@ -89,11 +90,11 @@ void Matrix::initialize(const double value)
 
 /* Accessors */
 
-Matrix* Matrix::getDimensions(int* rows, int* cols) 
+Matrix& Matrix::getDimensions(int* rows, int* cols) 
 {
 	*rows = this->rows;
 	*cols = this->cols;
-	return this;
+	return *this;
 }
 
 std::string Matrix::toString() 
@@ -114,23 +115,21 @@ double Matrix::operator()(int row, int col) const  // for const objects
 	return *(data + cols * row + col);
 }
 
-/* Iterators */
-
-inline Matrix* Matrix::forEach(double (*operation)(double)) 
-{
-	for (int i = 0; i < count; i++)
-		*(data + i) = operation(*(data + i));
-	return this;
-}
-
-inline Matrix* Matrix::forEachIndexed(double (*operation)(int, int, double))
-{
-	for (int i = 0; i < count; i++)
-		*(data + i) = operation(asRow(i), asCol(i), *(data + i));
-	return this;
-}
-
 /* Mathematical ops */
+
+inline Matrix& Matrix::plusRow(Vector& row) 
+{
+	if (row.getLength() != cols)
+		throw VectorDimensionError(row.getLength(), cols);
+	return *this;
+}
+
+inline Matrix& Matrix::plusCol(Vector& col)
+{
+	if (col.getLength() != rows)
+		throw VectorDimensionError(col.getLength(), cols);
+	return *this;
+}
 
 inline Matrix& Matrix::plus(Matrix& matrix)
 {
@@ -225,7 +224,7 @@ Matrix& Matrix::operator^(int exponent)
 	return power(exponent);
 }
 
-Matrix& Matrix::operator^(Matrix& matrix)		// hadamard product
+Matrix& Matrix::operator^(Matrix& matrix)
 {
 	return hadamardTimes(matrix);
 }
