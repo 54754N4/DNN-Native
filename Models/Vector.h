@@ -4,6 +4,8 @@
 class Vector
 {
 public:
+	/* Attributes */
+	const int count;
 	/* Constructors and destructor */
 	inline Vector();
 	Vector(int size);
@@ -32,12 +34,10 @@ public:
 	inline double operator[](int index) const { return *(data + index); };
 private:
 	bool row = 1;	// by default create row vectors
-	const int count;
 	double* data;
 
 	void initialize(const double value);
 	void slice(double* elements);
-	void cryOutOfRange(int index);
 };
 
 #include "Vector.tpp"

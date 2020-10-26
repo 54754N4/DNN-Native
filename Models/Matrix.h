@@ -32,8 +32,8 @@ public:
 	Matrix& indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
 	/* Math operations */
-	inline Matrix& plusRow(Vector& row);
-	inline Matrix& plusCol(Vector& col);
+	Matrix& plusRow(Vector& row);
+	Matrix& plusCol(Vector& col);
 	inline Matrix& plus(Matrix& matrix);
 	inline Matrix& times(double scalar);
 	inline Matrix& minus(Matrix& matrix);

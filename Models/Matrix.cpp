@@ -117,25 +117,31 @@ double Matrix::operator()(int row, int col) const  // for const objects
 
 /* Mathematical ops */
 
-inline Matrix& Matrix::plusRow(Vector& row) 
+Matrix& Matrix::plusRow(Vector& row) 
 {
-	if (row.getLength() != cols)
-		throw VectorDimensionError(row.getLength(), cols);
-	return *this;
+	if (row.count != cols)
+		throw VectorDimensionError(row.count, cols);
+	Matrix* result = new Matrix(rows, cols);
+	for (int i = 0; i < count; i++)
+		*(result->data + i) = *(data + i) + row(i % cols);
+	return *result;
 }
 
-inline Matrix& Matrix::plusCol(Vector& col)
+Matrix& Matrix::plusCol(Vector& col)
 {
-	if (col.getLength() != rows)
-		throw VectorDimensionError(col.getLength(), cols);
-	return *this;
+	if (col.count != rows)
+		throw VectorDimensionError(col.count, cols);
+	Matrix* result = new Matrix(rows, cols);
+	for (int i = 0; i < count; i++)
+		*(result->data + i) = *(data + i) + col(i / cols);
+	return *result;
 }
 
 inline Matrix& Matrix::plus(Matrix& matrix)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = *(data + i) + *(matrix.data + i);
+		*(result->data + i) = *(data + i) + *(matrix.data + i);
 	return *result;
 }
 

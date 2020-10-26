@@ -25,7 +25,7 @@ int main(char* args) {
 	//std::cout << matrix(0l, 1l) << std::endl;
 	
 	/* Test iterators */
-	/*double (*printConsumer)(double) = [](double value) -> double {
+	/*auto printConsumer = [](double value) -> double {
 		std::cout << value << std::endl;
 		return value;
 	};
@@ -39,7 +39,8 @@ int main(char* args) {
 	};
 	matrix.forEachIndexed(lambdaConsumer);
 	std::cout << std::endl;
-	/*double (*incrementor)(double) = [](double value) { return value + 1; };
+
+	/*auto incrementor = [](double value) { return value + 1; };
 	matrix.forEach(incrementor);
 	std::cout << matrix.toString() << std::endl;*/
 
@@ -65,9 +66,17 @@ int main(char* args) {
 	
 	//std::cout << v1.hadamardProduct(v2).toString() << std::endl;
 
-	//std::cout << (matrix + matrix).toString() << std::endl;
-	//std::cout << (matrix * matrix1).toString() << std::endl;
-	//std::cout << (matrix^2).toString() << std::endl;
-
-	std::cout << (Matrix::identity(10)^2).toString() << std::endl;
+	/*std::cout << (matrix + matrix).toString() << std::endl;
+	std::cout << (matrix * matrix1).toString() << std::endl;
+	std::cout << (matrix^2).toString() << std::endl;*/
+	
+	/*std::cout << matrix.plus(matrix).toString() << std::endl;
+	std::cout << matrix.times(matrix1).toString() << std::endl;
+	std::cout << matrix.power(2).toString() << std::endl;
+	
+	std::cout << (Matrix::identity(10) ^ 2).toString() << std::endl;*/
+	
+	double data2[] = { 1,2,3,4,5 };
+	Vector b(data2);
+	std::cout << Matrix::identity(5).plusRow(b).toString() << std::endl;
 }
