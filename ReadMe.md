@@ -3,7 +3,6 @@
 ## Math :
 
 	- Row/col operations:
-		- addition
 		- scalar multiplication
 		- swapping
 	- Submatrix:
