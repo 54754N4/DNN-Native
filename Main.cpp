@@ -8,13 +8,14 @@
 int main(char* args) {
 	double data[4][4] = {
 		{1,2,3,4},
-		{5,6,7,8},
-		{9,10,11,12},
-		{13,14,15,16}
+		{5,7,6,8},
+		{9,10,12,11},
+		{16,14,15,13}
 	};
 	Matrix matrix(data);
 	Matrix matrix1(data);
-	std::cout << matrix.toString() << std::endl;
+
+	//std::cout << matrix.toString() << std::endl;
 	
 	/* Test Dimensions */
 	/*long rows, cols;
@@ -81,5 +82,10 @@ int main(char* args) {
 	Vector b(data2);
 	std::cout << Matrix::identity(5).plusRow(b).toString() << std::endl;*/
 
-	std::cout << matrix.timesRow(1, 5).toString() << std::endl;
+	//std::cout << matrix.timesRow(1, 5).toString() << std::endl;
+
+	//std::cout << Matrix::identity(5).minor(1, 0).toString() << std::endl;
+
+	std::cout << matrix.toString() << std::endl;
+	std::cout << matrix.det() << std::endl;
 }

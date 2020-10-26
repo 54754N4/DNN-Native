@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <math.h>
 #include "Exceptions.h"
 #include "Vector.h"
 #include "Matrix.h"
@@ -42,24 +43,34 @@ Matrix::~Matrix()
 
 /* Accessors */
 
-inline bool Matrix::isSquare()
+bool Matrix::isSquare()
 {
 	return rows == cols;
 }
 
-inline int Matrix::getRows() 
+int Matrix::getRows() 
 {
 	return rows;
 }
 
-inline int Matrix::getCols()
+int Matrix::getCols()
 {
 	return cols;
 }
 
-inline int Matrix::getCount()
+int Matrix::getCount()
 {
 	return count;
+}
+
+double Matrix::getTrace()
+{
+	if (!isSquare())
+		throw new NotSquareMatrixError();
+	double sum = 0;
+	for (int i = 0; i < rows; ++i)
+		sum += *(data + cols * i + i);	// only iterate over diagonal
+	return sum;
 }
 
 /* Utility methods */
@@ -84,7 +95,7 @@ Matrix& Matrix::indexToCoords(int index, int* outRow, int* outCol)
 void Matrix::initialize(const double value) 
 {
 	data = new double[count];
-	for (int  i = 0; i < count; i++)
+	for (int  i = 0; i < count; ++i)
 		*(data + i) = value;
 }
 
@@ -100,7 +111,7 @@ Matrix& Matrix::getDimensions(int* rows, int* cols)
 std::string Matrix::toString() 
 {
 	std::ostringstream ss;
-	for (int i = 0; i < count; i++)
+	for (int i = 0; i < count; ++i)
 		ss << *(data + i) << (((i+1)%cols == 0) ? "\n" : "\t");
 	return ss.str();
 }
@@ -122,7 +133,7 @@ Matrix& Matrix::plusRow(Vector& row)
 	if (row.count != cols)
 		throw VectorDimensionError(row.count, cols);
 	Matrix* result = new Matrix(rows, cols);
-	for (int i = 0; i < count; i++)
+	for (int i = 0; i < count; ++i)
 		*(result->data + i) = *(data + i) + row(i % cols);
 	return *result;
 }
@@ -132,7 +143,7 @@ Matrix& Matrix::plusCol(Vector& col)
 	if (col.count != rows)
 		throw VectorDimensionError(col.count, cols);
 	Matrix* result = new Matrix(rows, cols);
-	for (int i = 0; i < count; i++)
+	for (int i = 0; i < count; ++i)
 		*(result->data + i) = *(data + i) + col(i / cols);
 	return *result;
 }
@@ -140,7 +151,7 @@ Matrix& Matrix::plusCol(Vector& col)
 Matrix& Matrix::timesRow(int row, double multiplier)
 {
 	Matrix* result = new Matrix(rows, cols);
-	for (int i = 0; i < count; i++) 
+	for (int i = 0; i < count; ++i) 
 		*(result->data + i) = *(data + i) * ((i % cols == row) ? multiplier : 1);
 	return *result;
 }
@@ -148,7 +159,7 @@ Matrix& Matrix::timesRow(int row, double multiplier)
 Matrix& Matrix::timesCol(int row, double multiplier)
 {
 	Matrix* result = new Matrix(rows, cols);
-	for (int i = 0; i < count; i++)
+	for (int i = 0; i < count; ++i)
 		*(result->data + i) = *(data + i) * ((i / cols == row) ? multiplier : 1);
 	return *result;
 }
@@ -161,6 +172,51 @@ Matrix& Matrix::swapRows(int first, int second)
 Matrix& Matrix::swapCols(int first, int second)
 {
 	throw new NotYetImplementedError();
+}
+
+/* Extra opeations */
+
+Matrix& Matrix::minor(int row, int col) 
+{
+	Matrix* minor = new Matrix(rows - 1, cols - 1);
+	for (int i = 0, j = 0, x, y; i < rows; ++j)
+	{
+		if (j == cols) {
+			j = 0;
+			++i;
+		}
+		if (i != row && j != col) {	// ignore deleted row/col
+			x = i > row ? i - 1 : i;
+			y = j > col ? j - 1 : j;
+			*(minor->data + minor->cols * x + y) = *(data + cols * i + j);
+		}
+	}
+	return *minor;
+}
+
+double Matrix::det()
+{
+	if (!isSquare())
+		throw new NotSquareMatrixError();
+	if (rows == 2) {				// stop condition
+		double a = *(data),			// [0][0]
+			b = *(data + 1),		// [0][1]
+			c = *(data + cols),		// [1][0]
+			d = *(data + cols + 1);	// [1][1]
+		return a * d - b * c;
+	}
+	/** Recursively calculate the matrix's determinant */
+	double determinant = 0;
+	for (int i = 0; i < rows; ++i)
+		/* we'll use the first column as pivot, and the following formula : det(A) = sigma(sign*pivot*det(minor))
+		 * where	sigma = sum of
+					sign = (-1)^i
+		 *			i = current pivot row
+		 *			pivot = the i'th coefficient from the first column
+		 *			minor = submatrix (after removing the pivot's row and col)
+		*/
+		determinant += *(data + cols * i) * pow(-1, i) * minor(i, 0).det();
+	return determinant;
 }
 
 /* Mathematical ops */

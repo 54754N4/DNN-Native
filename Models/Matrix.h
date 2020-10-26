@@ -17,10 +17,11 @@ public:
 	Matrix(double (&data)[r][c]);
 	~Matrix();
 	/* Accessors */
-	inline bool isSquare();
-	inline int getRows();
+	bool isSquare();
+	int getRows();
 	int getCols();
-	inline int getCount();
+	int getCount();
+	double getTrace();
 	Matrix& getDimensions(int* rows, int* cols);
 	inline double& get(int row, int col) const;
 	/* Iterators */
@@ -31,7 +32,7 @@ public:
 	/* Utility methods */
 	Matrix& indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
-	/* Math operations */
+	/* General operations */
 	Matrix& plusRow(Vector& row);
 	Matrix& plusCol(Vector& col);
 	Matrix& swapRows(int first, int second);
@@ -52,6 +53,11 @@ public:
 	Matrix& operator^(int exponent);				// power
 	Matrix& operator^(Matrix& matrix);				// hadamard
 	Matrix& operator/(Matrix& matrix);				// division
+	/* Static */
+	static Matrix& identity(int size);
+	/* Special operations */
+	Matrix& minor(int row, int column);
+	double det();
 	/* 1D indexing */
 	inline double& operator()(int index) { return *(data + index); };		
 	inline double& operator()(int index) const { return *(data + index); };
@@ -60,8 +66,6 @@ public:
 	/* 2D indexing */
 	double operator()(int row, int col) const;		// for const objects
 	inline double& operator()(int row, int col) { return *(data + cols * row + col); };
-	/* Static */
-	static Matrix& identity(int size);
 private:
 	double* data;
 

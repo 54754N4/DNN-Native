@@ -33,6 +33,13 @@ public:
 	}
 };
 
+class NotSquareMatrixError : std::exception {
+public:
+	const char* what() {
+		return "Invalid operation on a non-square matrix";
+	}
+};
+
 class NotYetImplementedError : std::exception {
 public:
 	const char* what() {
