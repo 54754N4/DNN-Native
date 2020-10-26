@@ -1,4 +1,6 @@
-# Todo :
+# Todo:
+
+## Math :
 
 	- Row/col operations:
 		- addition
@@ -10,4 +12,11 @@
 	- Cofactor
 	- Inverse (+ NotSquareMatrixError)
 	- Division
+	- Transformations (loss + activation functions)
+
+## DNN :
+	
+	- Initialisations
+	- Layers
+	- DNN
 
