@@ -33,6 +33,13 @@ public:
 	}
 };
 
+class NotYetImplementedError : std::exception {
+public:
+	const char* what() {
+		return "Method has not been implemented yet";
+	}
+};
+
 class VectorDimensionError : std::exception {
 	const long wrong, right;
 	std::string* message;	// Lazy loading

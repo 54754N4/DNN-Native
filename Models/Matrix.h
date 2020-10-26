@@ -34,6 +34,8 @@ public:
 	/* Math operations */
 	Matrix& plusRow(Vector& row);
 	Matrix& plusCol(Vector& col);
+	Matrix& swapRows(int first, int second);
+	Matrix& swapCols(int first, int second);
 	Matrix& timesRow(int row, double multiplier);
 	Matrix& timesCol(int row, double multiplier);
 	inline Matrix& plus(Matrix& matrix);

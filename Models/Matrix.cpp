@@ -115,7 +115,7 @@ double Matrix::operator()(int row, int col) const  // for const objects
 	return *(data + cols * row + col);
 }
 
-/* Mathematical ops */
+/* Mathematical ops - Row/Col operations */
 
 Matrix& Matrix::plusRow(Vector& row) 
 {
@@ -152,6 +152,18 @@ Matrix& Matrix::timesCol(int row, double multiplier)
 		*(result->data + i) = *(data + i) * ((i / cols == row) ? multiplier : 1);
 	return *result;
 }
+
+Matrix& Matrix::swapRows(int first, int second)
+{
+	throw new NotYetImplementedError();
+}
+
+Matrix& Matrix::swapCols(int first, int second)
+{
+	throw new NotYetImplementedError();
+}
+
+/* Mathematical ops */
 
 inline Matrix& Matrix::plus(Matrix& matrix)
 {
@@ -216,9 +228,9 @@ inline Matrix& Matrix::hadamardTimes(Matrix& matrix)
 	return *result;
 }
 
-inline Matrix& Matrix::divide(Matrix& matrix)		// NYI <=====================================
+inline Matrix& Matrix::divide(Matrix& matrix)
 {
-	return *this;
+	throw new NotYetImplementedError();
 }
 
 Matrix& Matrix::operator+(Matrix& matrix) 
@@ -251,9 +263,9 @@ Matrix& Matrix::operator^(Matrix& matrix)
 	return hadamardTimes(matrix);
 }
 
-Matrix& Matrix::operator/(Matrix& matrix)		// NYI <=====================================
+Matrix& Matrix::operator/(Matrix& matrix)
 {
-	return *this;
+	throw new NotYetImplementedError();
 }
 
 /* Static */
@@ -261,7 +273,7 @@ Matrix& Matrix::operator/(Matrix& matrix)		// NYI <=============================
 Matrix& Matrix::identity(int size) 
 {
 	Matrix* result = new Matrix(size);
-	for (int i = 0, cols = result->cols; i < result->count; i++)
+	for (int i = 0, cols = result->cols, count = result->count; i < count; i++)
 		*(result->data + i) = (i/cols == i%cols) ? 1 : 0;
 	return *result;
 }
