@@ -68,5 +68,5 @@ int main(char* args) {
 	//std::cout << (matrix * matrix1).toString() << std::endl;
 	//std::cout << (matrix^2).toString() << std::endl;
 
-	std::cout << Matrix::identity(3).toString() << std::endl;
+	std::cout << (Matrix::identity(10)^2).toString() << std::endl;
 }

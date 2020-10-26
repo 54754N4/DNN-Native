@@ -132,15 +132,15 @@ inline Matrix* Matrix::forEachIndexed(double (*operation)(int, int, double))
 
 /* Mathematical ops */
 
-Matrix& Matrix::operator+(Matrix& matrix) 
+inline Matrix& Matrix::plus(Matrix& matrix)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = *(data+i) + *(matrix.data+i);
+		(*result)[i] = *(data + i) + *(matrix.data + i);
 	return *result;
 }
 
-Matrix& Matrix::operator*(double value)
+inline Matrix& Matrix::times(double scalar)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
@@ -148,12 +148,12 @@ Matrix& Matrix::operator*(double value)
 	return *result;
 }
 
-Matrix& Matrix::operator-(Matrix& matrix)
+inline Matrix& Matrix::minus(Matrix& matrix)
 {
-	return *this + (matrix * (-1));
+	return plus(matrix.times(-1));
 }
 
-Matrix& Matrix::operator*(Matrix& matrix)
+inline Matrix& Matrix::times(Matrix& matrix)
 {
 	if (cols != matrix.rows)
 		throw new MatricesDifferentDimensionError(rows, cols, matrix.rows, matrix.cols);
@@ -174,11 +174,11 @@ Matrix& Matrix::operator*(Matrix& matrix)
 	return *result;
 }
 
-Matrix& Matrix::operator^(int exponent)
+inline Matrix& Matrix::power(int exponent)
 {
 	if (exponent <= 0)
 		throw new InvalidExponentError(exponent);
-	Matrix* result = new Matrix(rows, cols, data), * temp = 0;
+	Matrix* result = new Matrix(rows, cols, data), * temp = nullptr;
 	for (int i = 1; i < exponent; i++) {
 		temp = &(*result * *this);
 		delete result;	// delete intermediary matrices
@@ -186,13 +186,51 @@ Matrix& Matrix::operator^(int exponent)
 	}
 	return *result;
 }
-//NYI <=======
-Matrix& Matrix::operator/(Matrix& matrix)
+
+inline Matrix& Matrix::hadamardTimes(Matrix& matrix)
+{
+	Matrix* result = new Matrix(rows, cols);
+	for (int i = 0; i < count; ++i)
+		(*result)[i] = *(data + i) * *(matrix.data + i);
+	return *result;
+}
+
+inline Matrix& Matrix::divide(Matrix& matrix)		// NYI <=====================================
 {
 	return *this;
 }
 
-Matrix& Matrix::operator^(Matrix& matrix)
+Matrix& Matrix::operator+(Matrix& matrix) 
+{
+	return plus(matrix);
+}
+
+Matrix& Matrix::operator*(double value)
+{
+	return times(value);
+}
+
+Matrix& Matrix::operator-(Matrix& matrix)
+{
+	return minus(matrix);
+}
+
+Matrix& Matrix::operator*(Matrix& matrix)
+{
+	return times(matrix);
+}
+
+Matrix& Matrix::operator^(int exponent)
+{
+	return power(exponent);
+}
+
+Matrix& Matrix::operator^(Matrix& matrix)		// hadamard product
+{
+	return hadamardTimes(matrix);
+}
+
+Matrix& Matrix::operator/(Matrix& matrix)		// NYI <=====================================
 {
 	return *this;
 }

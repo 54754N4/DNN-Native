@@ -27,20 +27,27 @@ public:
 	Matrix* indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
 	/* Math operations */
-	double operator()(int row, int col) const;		 // for const objects
-	Matrix& operator+(Matrix& matrix);		// addition
-	Matrix& operator*(double scalar);		// scalar multiplication
-	Matrix& operator-(Matrix& matrix);		// substraction
-	Matrix& operator*(Matrix& matrix);		// multiplication
-	Matrix& operator^(int exponent);		// power
-	Matrix& operator^(Matrix& matrix);		// hadamard
-	Matrix& operator/(Matrix& matrix);		// division
+	inline Matrix& plus(Matrix& matrix);
+	inline Matrix& times(double scalar);
+	inline Matrix& minus(Matrix& matrix);
+	inline Matrix& times(Matrix& matrix);
+	inline Matrix& power(int exponent);
+	inline Matrix& hadamardTimes(Matrix& matrix);
+	inline Matrix& divide(Matrix& matrix);
+	Matrix& operator+(Matrix& matrix);				// addition
+	Matrix& operator*(double scalar);				// scalar multiplication
+	Matrix& operator-(Matrix& matrix);				// substraction
+	Matrix& operator*(Matrix& matrix);				// multiplication
+	Matrix& operator^(int exponent);				// power
+	Matrix& operator^(Matrix& matrix);				// hadamard
+	Matrix& operator/(Matrix& matrix);				// division
 	/* 1D indexing */
 	inline double& operator()(int index) { return *(data + index); };		
 	inline double& operator()(int index) const { return *(data + index); };
 	inline double& operator[](int index) { return *(data + index); };
 	inline double& operator[](int index) const { return *(data + index); };
 	/* 2D indexing */
+	double operator()(int row, int col) const;		// for const objects
 	inline double& operator()(int row, int col) { return *(data + cols * row + col); };
 	/* Static */
 	static Matrix& identity(int size);
