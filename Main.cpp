@@ -14,7 +14,8 @@ int main(char* args) {
 	};
 	Matrix matrix(data);
 	Matrix matrix1(data);
-	//std::cout << matrix.toString() << std::endl;
+	std::cout << matrix.toString() << std::endl;
+	
 	/* Test Dimensions */
 	/*long rows, cols;
 	matrix.getDimensions(&rows, &cols);
@@ -31,14 +32,14 @@ int main(char* args) {
 	};
 	matrix.forEach(printConsumer);*/
 
-	auto lambdaConsumer = [&](int row, int col, double value) -> double {		// use & default-capture for references
-		if (row != 0 && col == 0) std::cout << std::endl;
-		//std::cout << "Element at (" << row << "," << col << ") = " << value << std::endl;
-		std::cout << row << "," << col << "=" << row * matrix.cols + col << "\t";
-		return value;	// return same value to avoid changing it 
-	};
-	matrix.forEachIndexed(lambdaConsumer);
-	std::cout << std::endl;
+	//auto lambdaConsumer = [&](int row, int col, double value) -> double {		// use & default-capture for references
+	//	if (row != 0 && col == 0) std::cout << std::endl;
+	//	//std::cout << "Element at (" << row << "," << col << ") = " << value << std::endl;
+	//	std::cout << row << "," << col << "=" << row * matrix.cols + col << "\t";
+	//	return value;	// return same value to avoid changing it 
+	//};
+	//matrix.forEachIndexed(lambdaConsumer);
+	//std::cout << std::endl;
 
 	/*auto incrementor = [](double value) { return value + 1; };
 	matrix.forEach(incrementor);
@@ -76,7 +77,9 @@ int main(char* args) {
 	
 	std::cout << (Matrix::identity(10) ^ 2).toString() << std::endl;*/
 	
-	double data2[] = { 1,2,3,4,5 };
+	/*double data2[] = { 1,2,3,4,5 };
 	Vector b(data2);
-	std::cout << Matrix::identity(5).plusRow(b).toString() << std::endl;
+	std::cout << Matrix::identity(5).plusRow(b).toString() << std::endl;*/
+
+	std::cout << matrix.timesRow(1, 5).toString() << std::endl;
 }

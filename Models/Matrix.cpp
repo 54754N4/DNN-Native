@@ -137,6 +137,22 @@ Matrix& Matrix::plusCol(Vector& col)
 	return *result;
 }
 
+Matrix& Matrix::timesRow(int row, double multiplier)
+{
+	Matrix* result = new Matrix(rows, cols);
+	for (int i = 0; i < count; i++) 
+		*(result->data + i) = *(data + i) * ((i % cols == row) ? multiplier : 1);
+	return *result;
+}
+
+Matrix& Matrix::timesCol(int row, double multiplier)
+{
+	Matrix* result = new Matrix(rows, cols);
+	for (int i = 0; i < count; i++)
+		*(result->data + i) = *(data + i) * ((i / cols == row) ? multiplier : 1);
+	return *result;
+}
+
 inline Matrix& Matrix::plus(Matrix& matrix)
 {
 	Matrix* result = new Matrix(rows, cols);
