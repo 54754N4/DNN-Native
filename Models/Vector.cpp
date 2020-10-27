@@ -21,7 +21,7 @@ Vector::Vector(int size, const double initial) : count(size)
 	initialize(initial);
 }
 
-Vector::Vector(double* data, int count) : count(count)
+Vector::Vector(long double* data, int count) : count(count)
 {
 	slice(data);
 }
@@ -32,16 +32,16 @@ Vector::~Vector()
 }
 
 /* Utility methods */
-void Vector::initialize(const double value) 
+void Vector::initialize(const long double value)
 {
-	data = new double[count];
+	data = new long double[count];
 	for (int i = 0; i < count; i++)
 		*(data + i) = value;
 }
 
-void Vector::slice(double* elements) 
+void Vector::slice(long double* elements)
 {
-	data = new double[count];
+	data = new long double[count];
 	for (int i = 0; i < count; ++i)
 		*(data + i) = *(elements + i);
 }
@@ -71,11 +71,11 @@ std::string Vector::toString()
 	return result;
 }
 
-double Vector::dotProduct(Vector& vector) 
+long double Vector::dotProduct(Vector& vector)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
-	double dotProduct = 0;
+	long double dotProduct = 0;
 	for (int i = 0; i < count; ++i)
 		dotProduct += *(data+i) * *(vector.data+i);
 	return dotProduct;
@@ -115,7 +115,7 @@ Vector& Vector::operator+(Vector& vector)
 	return *result;
 }
 
-Vector& Vector::operator*(double value) {
+Vector& Vector::operator*(long double value) {
 	Vector* result = new Vector(count);
 	for (int i = 0; i < count; ++i)
 		(*result)[i] = (*data+i) * value;
