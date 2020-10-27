@@ -15,15 +15,22 @@ public:
 	Vector(long double (&vector)[c]);
 	~Vector();
 	/* Accessors */
+	bool isZero();
 	inline bool isRow();
 	inline bool isColumn();
-	inline int getLength();
+	int getLength();
+	long double getNorm();
 	std::string toString();
 	/* Operations */
 	bool equals(Vector& vector);
 	long double dotProduct(Vector& vector);
+	Vector& normalize();
 	Vector& hadamardProduct(Vector& vector);
 	Vector& transpose();
+	inline Vector& plus(Vector& vector);
+	inline Vector& times(long double scalar);
+	inline Vector& minus(Vector& vector);
+	inline Vector& times(Vector& vector);
 	Vector& operator+(Vector& vector);
 	Vector& operator*(long double value);
 	Vector& operator-(Vector& vector);

@@ -33,38 +33,38 @@ int main(char* args) {
 	};
 	matrix.forEach(printConsumer);*/
 
-	auto lambdaConsumer = [&](int row, int col, long double value) -> long double {		// use & default-capture for references
-		if (row != 0 && col == 0) std::cout << std::endl;
-		//std::cout << "Element at (" << row << "," << col << ") = " << value << std::endl;
-		std::cout << row << "," << col << "=" << row * matrix.cols + col << "\t";
-		return value;	// return same value to avoid changing it 
-	};
-	matrix.forEachIndexed(lambdaConsumer);
-	std::cout << std::endl;
+	//auto lambdaConsumer = [&](int row, int col, long double value) -> long double {		// use & default-capture for references
+	//	if (row != 0 && col == 0) std::cout << std::endl;
+	//	//std::cout << "Element at (" << row << "," << col << ") = " << value << std::endl;
+	//	std::cout << row << "," << col << "=" << row * matrix.cols + col << "\t";
+	//	return value;	// return same value to avoid changing it 
+	//};
+	//matrix.forEachIndexed(lambdaConsumer);
+	//std::cout << std::endl;
 
 	/*auto incrementor = [](long double value) { return value + 1; };
 	matrix.forEach(incrementor);
 	std::cout << matrix.toString() << std::endl;*/
 
 	/* Test vectors */
-	/*long double datav[3] = { 1,2,3 },
+	long double datav[3] = { 1,2,3 },
 		datav1[4] = {1,2,3,4};
 	Vector v1(datav);
-	Vector v2(datav);*/
-	/*vector.transpose();*/
-	/*std::cout << v1.toString() << std::endl;
-	std::cout << v1.getLength() << std::endl;*/
+	Vector v2(datav);
+	v1.transpose();
+	std::cout << v1.toString() << std::endl;
+	//std::cout << v1.getLength() << std::endl;
 
 	/* Test vector indexing */
-	//std::cout << vector(2) << std::endl;
-	/*vector(2) = 4;
-	std::cout << vector.toString() << std::endl;*/
+	/*std::cout << v1(2) << std::endl;
+	v1(2) = 4;
+	std::cout << v1.toString() << std::endl;*/
 
-	/*try {
-		std::cout << (v1 - v2).toString() << std::endl;
-	} catch (VectorsDifferentDimension& ex) {
-		std::cout << ex.what() << std::endl;
-	}*/
+	//try {
+	//	std::cout << (v1 - v2).toString() << std::endl;
+	//} catch (VectorsDifferentDimensionError& ex) {
+	//	std::cout << ex.what() << std::endl;
+	//}
 	
 	//std::cout << v1.hadamardProduct(v2).toString() << std::endl;
 
@@ -124,5 +124,5 @@ int main(char* args) {
 	//std::cout << Matrix::identity(2).toString() << std::endl;
 
 
-	std::cout << Matrix::identity(5).isUpperTriangular() << std::endl;
+	//std::cout << Matrix::identity(5).isUpperTriangular() << std::endl;
 }

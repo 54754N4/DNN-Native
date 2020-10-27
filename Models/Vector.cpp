@@ -57,9 +57,17 @@ inline bool Vector::isColumn()
 	return !row;
 }
 
-inline int Vector::getLength()
+int Vector::getLength()
 {
 	return count;
+}
+
+bool Vector::isZero()
+{
+	for (int i = 0; i < count; ++i)
+		if (*(data + i) != 0)
+			return false;
+	return true;
 }
 
 std::string Vector::toString() 
@@ -69,6 +77,19 @@ std::string Vector::toString()
 		result.append(std::to_string(*(data + i)))
 			.append(row ? " " : "\n");
 	return result;
+}
+
+long double Vector::getNorm()
+{
+	long double norm = 0;
+	for (int i = 0; i < count; ++i)
+		norm += *(data + i) * *(data + i);
+	return sqrt(norm);
+}
+
+Vector& Vector::normalize()
+{
+	return *this * (1 / getNorm());
 }
 
 long double Vector::dotProduct(Vector& vector)
@@ -105,29 +126,50 @@ bool Vector::equals(Vector& vector)
 	return true;
 }
 
-Vector& Vector::operator+(Vector& vector) 
+inline Vector& Vector::plus(Vector& vector)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
 	Vector* result = new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = *(data+i) + *(vector.data+i);
+		(*result)[i] = *(data + i) + *(vector.data + i);
 	return *result;
 }
 
-Vector& Vector::operator*(long double value) {
+inline Vector& Vector::times(long double scalar)
+{
 	Vector* result = new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = (*data+i) * value;
+		(*result)[i] = (*data + i) * scalar;
 	return *result;
 }
 
-Vector& Vector::operator-(Vector& vector)
+inline Vector& Vector::minus(Vector& vector)
 {
 	return *this + (vector * (-1));
 }
 
+inline Vector& Vector::times(Vector& vector)
+{
+	return hadamardProduct(vector);
+}
+
+Vector& Vector::operator+(Vector& vector) 
+{
+	return plus(vector);
+}
+
+Vector& Vector::operator*(long double scalar) 
+{
+	return times(scalar);
+}
+
+Vector& Vector::operator-(Vector& vector)
+{
+	return minus(vector);
+}
+
 Vector& Vector::operator*(Vector& vector)
 {
-	return this->hadamardProduct(vector);
+	return hadamardProduct(vector);
 }

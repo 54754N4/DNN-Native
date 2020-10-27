@@ -58,7 +58,7 @@ bool Matrix::isDiagonal()
 	return true;
 }
 
-/* Since:
+/* For the next two methods; since:
 - x = i/cols and y = i%cols
 - x grows south and y grows east
 if all cells where x < y are 0 <==> lower triangular matrix
