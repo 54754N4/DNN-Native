@@ -47,6 +47,13 @@ public:
 	}
 };
 
+class NullMatrixDeterminantError : std::exception {
+public:
+	const char* what() {
+		return "Matrix determinant == 0";
+	}
+};
+
 class VectorDimensionError : std::exception {
 	const long wrong, right;
 	std::string* message;	// Lazy loading

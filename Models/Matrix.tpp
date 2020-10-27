@@ -8,9 +8,9 @@
 /* Consutructor */
 
 template<int r, int c> 
-Matrix::Matrix(double (&matrix)[r][c]) : rows(r), cols(c), count(r * c) 
+Matrix::Matrix(long double(&matrix)[r][c]) : rows(r), cols(c), count(r * c)
 {
-	data = new double[rows * cols];
+	data = new long double[rows * cols];
 	for (int x = 0; x < rows; x++)
 		for (int y = 0; y < cols; y++)
 			*(data + cols * x + y) = matrix[x][y];

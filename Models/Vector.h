@@ -20,6 +20,7 @@ public:
 	inline int getLength();
 	std::string toString();
 	/* Operations */
+	bool equals(Vector& vector);
 	double dotProduct(Vector& vector);
 	Vector& hadamardProduct(Vector& vector);
 	Vector& transpose();

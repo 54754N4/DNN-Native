@@ -97,6 +97,14 @@ Vector& Vector::transpose()
 	return *this;
 }
 
+bool Vector::equals(Vector& vector)
+{
+	for (int i = 0; i < count; ++i)
+		if (*(data + i) != *(vector.data + i))
+			return false;
+	return true;
+}
+
 Vector& Vector::operator+(Vector& vector) 
 {
 	if (count != vector.count)

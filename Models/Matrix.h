@@ -11,19 +11,22 @@ public:
 	inline Matrix();
 	Matrix(int size);
 	Matrix(int row, int col);
-	Matrix(int row, int col, const double initial);
-	Matrix(int row, int col, const double* results);
+	Matrix(int row, int col, const long double initial);
+	Matrix(int row, int col, const long double* results);
 	template<int r, int c>
-	Matrix(double (&data)[r][c]);
+	Matrix(long double(&data)[r][c]);
 	~Matrix();
 	/* Accessors */
 	bool isSquare();
+	bool isDiagonal();
+	bool isLowerTriangular();
+	bool isUpperTriangular();
 	int getRows();
 	int getCols();
 	int getCount();
-	double getTrace();
+	long double getTrace();
 	Matrix& getDimensions(int* rows, int* cols);
-	inline double& get(int row, int col) const;
+	inline long double& get(int row, int col) const;
 	/* Iterators */
 	template<class Function>
 	Matrix& forEach(Function operation);		// input: double			| output: double
@@ -33,21 +36,23 @@ public:
 	Matrix& indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
 	/* General operations */
+	const bool equals(const Matrix& matrix) const;
 	Matrix& plusRow(Vector& row);
 	Matrix& plusCol(Vector& col);
 	Matrix& swapRows(int first, int second);
 	Matrix& swapCols(int first, int second);
-	Matrix& timesRow(int row, double multiplier);
-	Matrix& timesCol(int row, double multiplier);
+	Matrix& timesRow(int row, long double multiplier);
+	Matrix& timesCol(int row, long double multiplier);
 	inline Matrix& plus(Matrix& matrix);
-	inline Matrix& times(double scalar);
+	inline Matrix& times(long double scalar);
 	inline Matrix& minus(Matrix& matrix);
 	inline Matrix& times(Matrix& matrix);
 	inline Matrix& power(int exponent);
 	inline Matrix& hadamardTimes(Matrix& matrix);
+	Matrix& inverse();
 	inline Matrix& divide(Matrix& matrix);
 	Matrix& operator+(Matrix& matrix);				// addition
-	Matrix& operator*(double scalar);				// scalar multiplication
+	Matrix& operator*(long double scalar);			// scalar multiplication
 	Matrix& operator-(Matrix& matrix);				// substraction
 	Matrix& operator*(Matrix& matrix);				// multiplication
 	Matrix& operator^(int exponent);				// power
@@ -57,19 +62,24 @@ public:
 	static Matrix& identity(int size);
 	/* Special operations */
 	Matrix& minor(int row, int column);
-	double det();
+	inline long double det();
+	Matrix& transpose();
+	Matrix& cofactor();
+	Matrix& adjugate();
 	/* 1D indexing */
-	inline double& operator()(int index) { return *(data + index); };		
-	inline double& operator()(int index) const { return *(data + index); };
-	inline double& operator[](int index) { return *(data + index); };
-	inline double& operator[](int index) const { return *(data + index); };
+	inline long double& operator()(int index) { return *(data + index); };
+	inline long double& operator()(int index) const { return *(data + index); };
+	inline long double& operator[](int index) { return *(data + index); };
+	inline long double& operator[](int index) const { return *(data + index); };
 	/* 2D indexing */
-	double operator()(int row, int col) const;		// for const objects
-	inline double& operator()(int row, int col) { return *(data + cols * row + col); };
+	long double operator()(int row, int col) const;		// for const objects
+	inline long double& operator()(int row, int col) { return *(data + cols * row + col); };
+	/* Debug */
+	void spit();
 private:
-	double* data;
+	long double* data;
 
-	void initialize(const double value);
+	void initialize(const long double value);
 	inline int asRow(int index);
 	inline int asCol(int index);
 };
