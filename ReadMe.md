@@ -6,6 +6,7 @@
 		- inverse/divide
 		- isSquare/Diagonal/UpperTriangle/LowerTriangle
 		- trace/transpose/cofactor/adjugate
+		- minor matrix + determinant
 	- Matrix indexers + iterators + inlined methods
 	- Vectors almost the same but less
 
