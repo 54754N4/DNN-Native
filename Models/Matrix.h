@@ -25,7 +25,7 @@ public:
 	int getCols();
 	int getCount();
 	long double getTrace();
-	Matrix& getDimensions(int* rows, int* cols);
+	Matrix& getDimensions(int& rows, int& cols);
 	inline long double& get(int row, int col) const;
 	/* Iterators */
 	template<class Function>
@@ -49,7 +49,7 @@ public:
 	inline Matrix& times(Matrix& matrix);
 	inline Matrix& power(int exponent);
 	inline Matrix& hadamardTimes(Matrix& matrix);
-	Matrix& inverse();
+	Matrix& inverse();								// should i inline
 	inline Matrix& divide(Matrix& matrix);
 	Matrix& operator+(Matrix& matrix);				// addition
 	Matrix& operator*(long double scalar);			// scalar multiplication

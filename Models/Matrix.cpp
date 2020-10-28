@@ -137,10 +137,10 @@ void Matrix::initialize(const long double value)
 
 /* Accessors */
 
-Matrix& Matrix::getDimensions(int* rows, int* cols) 
+Matrix& Matrix::getDimensions(int& rows, int& cols) 
 {
-	*rows = this->rows;
-	*cols = this->cols;
+	rows = this->rows;
+	cols = this->cols;
 	return *this;
 }
 
