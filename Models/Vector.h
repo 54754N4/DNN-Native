@@ -22,7 +22,7 @@ public:
 	long double getNorm();
 	std::string toString();
 	/* Operations */
-	bool equals(Vector& vector);
+	const bool equals(Vector& vector);
 	long double dotProduct(Vector& vector);
 	Vector& normalize();
 	Vector& hadamardProduct(Vector& vector);
@@ -36,6 +36,7 @@ public:
 	Vector& operator-(Vector& vector);
 	Vector& operator*(Vector& vector);	// dot product
 	/* Operator overloads (inline = have to be defined in header file) */
+	inline const bool operator==(Vector& vector) { return equals(vector); };
 	inline long double& operator()(int index) { return *(data + index); }
 	inline long double operator()(int index) const { return *(data + index); };
 	inline long double& operator[](int index) { return *(data + index); }
