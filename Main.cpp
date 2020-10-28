@@ -1,18 +1,20 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
-//#include "DNN\Layers\Layer.h"
-#include "Models\Vector.h"
 #include "Models\Exceptions.h"
+#include "Models\Vector.h"
 #include "Models\Matrix.h"
+#include "DNN\Layers\Layer.h"
+#include "DNN\Layers\Transforms.h"
 
 int main(char* args) {
 	/* Test vectors */
-	/*long double datav[3] = { 1,2,3 },
+	long double datav[3] = { 1,2,3 },
 		datav1[4] = { 1,2,3,4 };
 	Vector v1(datav);
 	Vector v2(datav);
-	v1.transpose();
+	
+	/*v1.transpose();
 	std::cout << "Vector:" << std::endl << v1.toString() << std::endl;
 	std::cout << "Length:" << v1.getLength() << std::endl;*/
 
@@ -31,7 +33,7 @@ int main(char* args) {
 	std::cout << v1.hadamardProduct(v2).toString() << std::endl;*/
 
 	/* Test Matrices */
-	/*long double data[4][4] = {
+	long double data[4][4] = {
 		{1,2,3,4},
 		{5,7,6,8},
 		{9,10,12,11},
@@ -40,7 +42,7 @@ int main(char* args) {
 	Matrix matrix(data);
 	Matrix matrix1(data);
 
-	std::cout << matrix.toString() << std::endl;*/
+	//std::cout << matrix.toString() << std::endl;
 	
 	/* Test Dimensions */
 	/*int rows, cols;
@@ -127,4 +129,9 @@ int main(char* args) {
 	//std::cout << Matrix::identity(2).toString() << std::endl;
 
 	//std::cout << Matrix::identity(5).isUpperTriangular() << std::endl;
+
+	/* Test Layers */
+	long double* result = softmax(datav, 3);
+	for (int i = 0; i < 3; i++)
+		std::cout << result[i] << " ";
 }

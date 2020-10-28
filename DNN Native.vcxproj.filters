@@ -36,6 +36,9 @@
     <ClCompile Include="DNN\Initialisers\Initialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DNN\Layers\Transforms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Models\Exceptions.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DNN\Initialisers\Initialiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DNN\Layers\Transforms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

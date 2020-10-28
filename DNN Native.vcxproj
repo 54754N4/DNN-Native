@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="DNN\Initialisers\Initialiser.cpp" />
     <ClCompile Include="DNN\Layers\Layer.cpp" />
+    <ClCompile Include="DNN\Layers\Transforms.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Models\Matrix.cpp" />
     <ClCompile Include="Models\Vector.cpp" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="DNN\Initialisers\Initialiser.h" />
     <ClInclude Include="DNN\Layers\Layer.h" />
+    <ClInclude Include="DNN\Layers\Transforms.h" />
     <ClInclude Include="Models\Exceptions.h" />
     <ClInclude Include="Models\Matrix.h" />
     <ClInclude Include="Models\Vector.h" />
