@@ -73,19 +73,19 @@ int main(char* args) {
 	//matrix.forEach(incrementor);
 	//std::cout << matrix.toString() << std::endl;
 
-	//std::cout << (matrix + matrix).toString() << std::endl;
-	//std::cout << (matrix * matrix1).toString() << std::endl;
-	//std::cout << (matrix^2).toString() << std::endl;
-	//
-	//std::cout << matrix.plus(matrix).toString() << std::endl;
-	//std::cout << matrix.times(matrix1).toString() << std::endl;
-	//std::cout << matrix.power(2).toString() << std::endl;
-	//
-	//std::cout << (Matrix::identity(10) ^ 2).toString() << std::endl;
-	//
-	//long double data2[] = { 1,2,3,4,5 };
-	//Vector b(data2);
-	//std::cout << Matrix::identity(5).plusRow(b).toString() << std::endl;
+	std::cout << (matrix + matrix).toString() << std::endl;
+	std::cout << (matrix * matrix1).toString() << std::endl;
+	std::cout << (matrix^2).toString() << std::endl;
+	
+	std::cout << matrix.plus(matrix).toString() << std::endl;
+	std::cout << matrix.times(matrix1).toString() << std::endl;
+	std::cout << matrix.power(2).toString() << std::endl;
+	
+	std::cout << (Matrix::identity(10) ^ 2).toString() << std::endl;
+	
+	long double data2[] = { 1,2,3,4,5 };
+	Vector b(data2);
+	std::cout << Matrix::identity(5).plusRow(b).toString() << std::endl;
 
 	//std::cout << matrix.timesRow(1, 5).toString() << std::endl;
 
@@ -94,44 +94,44 @@ int main(char* args) {
 	//std::cout << matrix.toString() << std::endl;
 	//std::cout << matrix.det() << std::endl;				// should print -126 
 
-	//long double cofactorData[3][3] = {
-	//	{1,2,3},
-	//	{0,4,5},
-	//	{1,0,6}
-	//};
-	//Matrix cofm(cofactorData);
-	//std::cout << cofm.toString() << std::endl;
-	//std::cout << cofm.det() << std::endl;
-	//std::cout << cofm.cofactor().toString() << std::endl;
+	long double cofactorData[3][3] = {
+		{1,2,3},
+		{0,4,5},
+		{1,0,6}
+	};
+	Matrix cofm(cofactorData);
+	std::cout << cofm.toString() << std::endl;
+	std::cout << cofm.det() << std::endl;
+	std::cout << cofm.cofactor().toString() << std::endl;
 
-	//long double transposeData[3][3] = {
-	//	{ 1,2,3 },
-	//	{ 4,5,6 },
-	//	{ 7,8,9 }
-	//};
-	//Matrix transm(transposeData);
-	//std::cout << transm.toString() << std::endl;
-	//std::cout << transm.transpose().toString() << std::endl;
+	long double transposeData[3][3] = {
+		{ 1,2,3 },
+		{ 4,5,6 },
+		{ 7,8,9 }
+	};
+	Matrix transm(transposeData);
+	std::cout << transm.toString() << std::endl;
+	std::cout << transm.transpose().toString() << std::endl;
 
-	//long double inverseData[2][2] = {
-	//	{ 4,7 },
-	//	{ 2,6 }
-	//};
-	//Matrix invm(inverseData);
-	//std::cout << invm.toString() << std::endl;
-	//std::cout << invm.cofactor().toString() << std::endl;
-	//std::cout << invm.cofactor().transpose().toString() << std::endl;
-	//std::cout << invm.cofactor().transpose().times(1 / invm.det()).toString() << std::endl;
-	//std::cout << invm.inverse().toString() << std::endl;
-	//std::cout << invm.times(invm.inverse()).toString() << std::endl;
-	//std::cout << invm.times(invm.inverse()).toString() << std::endl;
-	//std::cout << invm.times(invm.inverse()).equals(Matrix::identity(2)) << std::endl; // doesn't work due to precision
-	//std::cout << Matrix::identity(2).toString() << std::endl;
+	long double inverseData[2][2] = {
+		{ 4,7 },
+		{ 2,6 }
+	};
+	Matrix invm(inverseData);
+	std::cout << invm.toString() << std::endl;
+	std::cout << invm.cofactor().toString() << std::endl;
+	std::cout << invm.cofactor().transpose().toString() << std::endl;
+	std::cout << invm.cofactor().transpose().times(1 / invm.det()).toString() << std::endl;
+	std::cout << invm.inverse().toString() << std::endl;
+	std::cout << invm.times(invm.inverse()).toString() << std::endl;
+	std::cout << invm.times(invm.inverse()).toString() << std::endl;
+	std::cout << (invm.times(invm.inverse()) == Matrix::identity(2)) << std::endl; // doesn't work due to precision
+	std::cout << Matrix::identity(2).toString() << std::endl;
 
 	//std::cout << Matrix::identity(5).isUpperTriangular() << std::endl;
 
 	/* Test Layers */
-	long double* result = softmax(datav, 3);
+	/*long double* result = softmax(datav, 3);
 	for (int i = 0; i < 3; i++)
-		std::cout << result[i] << " ";
+		std::cout << result[i] << " ";*/
 }
