@@ -1,4 +1,4 @@
-# Done :
+## Done :
 
 	- Matrix operations:
 		- add/substract
@@ -10,18 +10,20 @@
 	- Matrix indexers + iterators + inlined methods
 	- Vectors almost the same but less
 
-# Todo:
+## Doing :
+	
+	- Transformations (loss + activation functions)
+	- Initialisations
+	- Layers
 
-## Math :
+## Todo:
+
+#### Math :
 
 	- Row/col operations:
 		- swapping
 		- inserting
 
-## DNN :
+#### DNN :
 	
-	- Transformations (loss + activation functions)
-	- Initialisations
-	- Layers
 	- DNN
-
