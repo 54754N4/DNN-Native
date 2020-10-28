@@ -8,9 +8,8 @@
 #include "..\..\Models\Matrix.h"
 #include "Layer.h"
 
-Layer::Layer(int inputs, int neurons, Matrix* weights, Vector* bias) 
-	: inputs(inputs), neurons(neurons), weights(weights), bias(bias),
-	previousActivation(nullptr), error(nullptr), delta(nullptr) {}
+Layer::Layer(int inputs, int neurons, Matrix& weights, Vector& bias) 
+	: inputs(inputs), neurons(neurons), weights(weights), bias(bias) {}
 
 /**
   * Calculates the dot product of this layer : X . W + B
@@ -18,10 +17,10 @@ Layer::Layer(int inputs, int neurons, Matrix* weights, Vector* bias)
   * @param x The input.
   * @return The result.
   */
-Matrix* Layer::activate(Matrix* x) 
+Matrix& Layer::activate(Matrix& x) 
 {
-	Matrix* temp = &(x->times(*weights).plusRow(*bias));
-	previousActivation = applyActivation(temp);
+	Matrix* temp = &x.times(weights).plusRow(bias);
+	previousActivation = &applyActivation(*temp);
 	delete temp;
-	return previousActivation;
+	return *previousActivation;
 }
