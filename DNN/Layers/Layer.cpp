@@ -9,7 +9,8 @@
 #include "Layer.h"
 
 Layer::Layer(int inputs, int neurons, Matrix& weights, Vector& bias) 
-	: inputs(inputs), neurons(neurons), weights(weights), bias(bias) {}
+	: inputs(inputs), neurons(neurons), weights(weights), bias(bias),
+	previousActivation(nullptr), error(nullptr), delta(nullptr) {}
 
 /**
   * Calculates the dot product of this layer : X . W + B
