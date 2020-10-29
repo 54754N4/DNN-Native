@@ -306,7 +306,10 @@ Matrix& Matrix::cofactor()
 
 Matrix& Matrix::adjugate()
 {
-	return cofactor().transpose();
+	Matrix* temp = &cofactor();
+	Matrix& result = temp->transpose();
+	delete temp;
+	return result;
 }
 
 Matrix& Matrix::transpose()
@@ -337,7 +340,10 @@ inline Matrix& Matrix::times(long double scalar)
 
 inline Matrix& Matrix::minus(Matrix& matrix)
 {
-	return plus(matrix.times(-1));
+	Matrix* temp = &matrix.times(-1);
+	Matrix& result = plus(*temp);
+	delete temp;
+	return result;;
 }
 
 inline Matrix& Matrix::times(Matrix& matrix)
@@ -387,13 +393,19 @@ Matrix& Matrix::inverse()
 		throw NotSquareMatrixError();
 	if (det() == 0)
 		throw NullMatrixDeterminantError();
-	return adjugate().times(1./det());
+	Matrix* temp = &adjugate();
+	Matrix& result = temp->times(1 / det());
+	delete temp;
+	return result;
 }
 
 inline Matrix& Matrix::divide(Matrix& matrix)
 {
 	if ((rows != cols) || (matrix.rows != matrix.cols))
 		throw NotSquareMatrixError();
+	Matrix* temp = &matrix.inverse();
+	Matrix& result = times(*temp);
+	delete temp;
 	return times(matrix.inverse());
 }
 
@@ -429,7 +441,7 @@ Matrix& Matrix::operator^(Matrix& matrix)
 
 Matrix& Matrix::operator/(Matrix& matrix)
 {
-	throw new NotYetImplementedError();
+	throw divide(matrix);
 }
 
 /* Static */
