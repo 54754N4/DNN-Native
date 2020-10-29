@@ -9,10 +9,10 @@
 		- minor matrix + determinant
 	- Matrix indexers + iterators + inlined methods
 	- Vectors almost the same but less
+	- Transformations (loss + activation functions)
 
 ## Doing :
-	
-	- Transformations (loss + activation functions)
+
 	- Initialisations
 	- Layers
 
