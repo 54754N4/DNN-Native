@@ -121,6 +121,11 @@ inline int Matrix::asCol(int index)
 	return index % cols;
 }
 
+const bool Matrix::isDiagonal(int index) 
+{
+	return index/cols == index % cols;
+}
+
 Matrix& Matrix::indexToCoords(int index, int* outRow, int* outCol) 
 {
 	*outRow = asRow(index);
@@ -361,7 +366,7 @@ inline Matrix& Matrix::times(Matrix& matrix)
 			y = 0;
 			x++;
 		}
-		*(result->data + cols * x + y) += *(data + cols * x + z) * *(matrix.data + cols * z + y);
+		*(result->data + result->cols * x + y) += *(data + cols * x + z) * *(matrix.data + matrix.cols * z + y);
 	}
 	return *result;
 }
@@ -449,7 +454,15 @@ Matrix& Matrix::operator/(Matrix& matrix)
 Matrix& Matrix::identity(int size) 
 {
 	Matrix* result = new Matrix(size);
-	for (int i = 0, cols = result->cols, count = result->count; i < count; i++)
+	for (int i = 0, cols = result->cols, count = result->count; i < count; ++i)
 		*(result->data + i) = (i/cols == i%cols) ? 1 : 0;
+	return *result;
+}
+
+Matrix& Matrix::diagonal(long double* data, int count)
+{
+	Matrix* result = new Matrix(count, count);
+	for (int i = 0, k=0; i < count * count; ++i)
+		*(result->data + i) = (i / count == i % count) ? *(data + k++) : 0;
 	return *result;
 }

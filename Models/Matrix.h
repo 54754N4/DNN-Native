@@ -33,6 +33,7 @@ public:
 	template<class Function>
 	Matrix& forEachIndexed(Function operation);	// input: int, int, double	| output: double
 	/* Utility methods */
+	const bool isDiagonal(int index);
 	Matrix& indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
 	/* General operations */
@@ -60,6 +61,7 @@ public:
 	Matrix& operator/(Matrix& matrix);				// division
 	/* Static */
 	static Matrix& identity(int size);
+	static Matrix& diagonal(long double* data, int count);
 	/* Special operations */
 	Matrix& minor(int row, int column);
 	inline long double det();
