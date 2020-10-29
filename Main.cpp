@@ -6,6 +6,7 @@
 #include "Models\Matrix.h"
 #include "DNN\Layers\Layer.h"
 #include "DNN\Layers\Transforms.h"
+#include "DNN\Layers\Sigmoid.h"
 
 int main(char* args) {
 	/* Test vectors */
@@ -132,12 +133,26 @@ int main(char* args) {
 
 	//std::cout << Matrix::diagonal(data2, 5).toString() << std::endl;
 
-	Matrix mrow(1, 4, datav1);
+	/*Matrix mrow(1, 4, datav1);
 	Matrix mcol(4, 1, datav1);
-	std::cout << (mcol * mrow).toString() << std::endl;
+	std::cout << (mcol * mrow).toString() << std::endl;*/
 
 	/* Test Layers */
 	/*long double* result = softmax(datav, 3);
 	for (int i = 0; i < 3; i++)
 		std::cout << result[i] << " ";*/
+	long double softmaxData[3][3] = {
+		{1,2,3},
+		{4,5,6},
+		{7,8,9}
+	};
+
+	Matrix weights(softmaxData);
+	Vector biases(datav1);
+	/*Sigmoid layer(4, 4, weights, biases);
+	std::cout << layer.inputs << "," << layer.neurons << std::endl;
+	std::cout << weights.flatten().toString() << std::endl;
+	std::cout << layer.applyActivation(weights).toString() << std::endl;*/
+
+	std::cout << softmaxDerivative(weights).toString() << std::endl;
 }

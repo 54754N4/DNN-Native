@@ -12,6 +12,13 @@ Layer::Layer(int inputs, int neurons, Matrix& weights, Vector& bias)
 	: inputs(inputs), neurons(neurons), weights(weights), bias(bias),
 	previousActivation(nullptr), error(nullptr), delta(nullptr) {}
 
+Layer::~Layer()
+{
+	delete previousActivation;
+	delete error;
+	delete delta;
+}
+
 /**
   * Calculates the dot product of this layer : X . W + B
   * Also saves the result for use in backprop later.
