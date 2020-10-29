@@ -10,10 +10,9 @@
 template<int r, int c> 
 Matrix::Matrix(long double(&matrix)[r][c]) : rows(r), cols(c), count(r * c)
 {
-	data = new long double[rows * cols];
-	for (int x = 0; x < rows; x++)
-		for (int y = 0; y < cols; y++)
-			*(data + cols * x + y) = matrix[x][y];
+	data = new long double[count];
+	for (int i=0; i<count; ++i)
+			*(data + cols * (i / cols) + (i % cols)) = matrix[i / cols][i % cols];
 }
 
 /* Iterators */
