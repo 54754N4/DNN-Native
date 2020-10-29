@@ -19,8 +19,10 @@ Layer::Layer(int inputs, int neurons, Matrix& weights, Vector& bias)
   */
 Matrix& Layer::activate(Matrix& x) 
 {
-	Matrix* temp = &x.times(weights).plusRow(bias);
-	previousActivation = &applyActivation(*temp);
-	delete temp;
+	Matrix* temp1 = &x.times(weights), 
+		* temp2 = &temp1->plusRow(bias);
+	delete temp1;
+	previousActivation = &applyActivation(*temp2);
+	delete temp2;
 	return *previousActivation;
 }
