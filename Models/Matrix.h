@@ -25,6 +25,7 @@ public:
 	int getCols();
 	int getCount();
 	long double getTrace();
+	long double* getData();
 	Matrix& getDimensions(int& rows, int& cols);
 	inline long double& get(int row, int col) const;
 	/* Iterators */
@@ -68,6 +69,8 @@ public:
 	Matrix& transpose();
 	Matrix& cofactor();
 	Matrix& adjugate();
+	/* Other */
+	Matrix& flatten(bool col=true);
 	/* Inline operators */
 	inline const bool operator==(Matrix& matrix) { return equals(matrix); };
 	inline const bool operator==(const Matrix& matrix) const { return equals(matrix); };

@@ -99,6 +99,11 @@ int Matrix::getCount()
 	return count;
 }
 
+long double* Matrix::getData()
+{
+	return data;
+}
+
 long double Matrix::getTrace()
 {
 	if (!isSquare())
@@ -319,10 +324,17 @@ Matrix& Matrix::adjugate()
 
 Matrix& Matrix::transpose()
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* result = new Matrix(cols, rows);
 	for (int i = 0; i < count; ++i)
 		*(result->data + i) = *(data + cols * (i % cols) + i / cols);
 	return *result;
+}
+
+/* Other */
+
+Matrix& Matrix::flatten(bool col)
+{
+	return col ? *new Matrix(count, 1, data) : *new Matrix(1, count, data);
 }
 
 /* Mathematical ops */
@@ -345,10 +357,10 @@ inline Matrix& Matrix::times(long double scalar)
 
 inline Matrix& Matrix::minus(Matrix& matrix)
 {
-	Matrix* temp = &matrix.times(-1);
-	Matrix& result = plus(*temp);
-	delete temp;
-	return result;;
+	Matrix* result = new Matrix(rows, cols);
+	for (int i = 0; i < count; ++i)
+		*(result->data + i) = *(data + i) - *(matrix.data + i);
+	return *result;;
 }
 
 inline Matrix& Matrix::times(Matrix& matrix)
