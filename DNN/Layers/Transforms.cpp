@@ -22,9 +22,14 @@ long double Transforms::max(long double* data, const int count)
 {
 	long double max = 0;
 	for (int i = 0; i < count; ++i)
-		if (*(data + i) > max)
-			max = *(data + i);
+		if (data[i] > max)
+			max = data[i];
 	return max;
+}
+
+long double Transforms::logCosh(long double x)
+{
+	return log(cosh(x));
 }
 
 long double Transforms::coth(long double x)
@@ -127,11 +132,11 @@ long double* Transforms::softmax(long double* data, const int count)
 		m = max(data, count),
 		*result = new long double[count];
 	for (int i = 0; i < count; ++i) {
-		*(result + i) = exp(*(data + i) - m);
-		sum += *(result + i);
+		result[i] = exp(data[i] - m);
+		sum += result[i];
 	}
 	for (int i = 0; i < count; ++i)
-		*(result + i) /= sum;
+		result[i] /= sum;
 	return result;
 }
 
@@ -225,8 +230,9 @@ long double Transforms::gelu(long double x)
 
 long double Transforms::geluDerivative(long double x)
 {
-	long double s = sech(0.0356774 * x * x * x + 0.797885 * x);
-	return 0.5 * tanh(0.0356774 * x * x * x + 0.797885 * x) + (0.0535161 * x * x * x + 0.398942 * x) * (s * s) + 0.5;
+	long double val = 0.0356774 * x * x * x + 0.797885 * x, s = sech(val),
+		m = (0.0535161 * x * x * x + 0.398942 * x) * (s * s);
+	return 0.5 * tanh(val) + m + 0.5;
 }
 
 long double Transforms::cube(long double x)
@@ -247,7 +253,7 @@ long double Transforms::swish(long double x)
 long double Transforms::swishDerivative(long double x)
 {
 	long double s = sigmoid(x);
-	return 2 * s - s * s;
+	return s*(2-s);
 }
 
 long double Transforms::softsign(long double x)
@@ -257,8 +263,8 @@ long double Transforms::softsign(long double x)
 
 long double Transforms::softsignDerivative(long double x)
 {
-	long double a = abs(x);
-	return (1 + a - x * x / a) / ((1 + a) * (1 + a));
+	long double a = abs(x), app = 1 + a;
+	return (app - x * x / a) / (app * app);
 }
 
 long double Transforms::softplus(long double x)
@@ -268,5 +274,58 @@ long double Transforms::softplus(long double x)
 
 long double Transforms::softplusDerivative(long double x)
 {
-	return 1 / (1 + exp(-x));
+	long double e = exp(x);
+	return e / (e + 1);				// 1 / (1 + exp(-x)) <===> exp(x)/(exp(x)+1)
+}
+
+/* Loss Functions */
+
+long double Transforms::meanSquareLoss(Matrix& y, Matrix& truth)
+{
+	long double mse;
+	Matrix* result = &truth.minus(y);
+	result->forEach([](long double v) -> long double { return v * v; }, true);
+	mse = result->getSum() / result->count;
+	delete result;
+	return mse;
+}
+
+long double Transforms::meanAbsoluteLoss(Matrix& y, Matrix& truth)
+{
+	long double mse;
+	Matrix* result = &truth.minus(y);
+	result->forEach([](long double v) -> long double { return abs(v); }, true);
+	mse = result->getSum() / result->count;
+	delete result;
+	return mse;
+}
+
+long double Transforms::smoothMeanAbsoluteLoss(Matrix& y, Matrix& truth)
+{
+	long double mse;
+	const long double t = Transforms::SMAE_DELTA;
+	Matrix* result = &truth.minus(y);
+	result->forEach([&t](long double v) -> long double {
+		long double a = abs(v);
+		return (a <= t) ? 
+			1 / 2 * v * v :
+			t * a - 1 / 2 * t * t;
+	}, true);
+	mse = result->getSum() / result->count;
+	delete result;
+	return mse;
+}
+
+long double Transforms::logCoshLoss(Matrix& y, Matrix& truth)
+{
+	Matrix* result = &truth.minus(y);
+	long double mse = result->forEach(logCosh, true).getSum() / result->count;
+	delete result;
+	return mse;
+}
+
+long double Transforms::crossEntropyLoss(Matrix& y, Matrix& truth)
+{
+	return -y.forEach(log2l).hadamardTimes(truth).getSum() / y.count;
+
 }

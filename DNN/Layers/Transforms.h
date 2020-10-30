@@ -9,12 +9,14 @@ https://mlfromscratch.com/activation-functions-explained/#/
 namespace Transforms
 {
 	const long double LEAKY_RELU_ALPHA = 0.3,
-		ELU_ALPHA = 0.3,		// alpha usually belongs to [0.1, 0.3]
+		ELU_ALPHA = 0.3,								// alpha usually belongs to [0.1, 0.3]
 		SELU_ALPHA = 1.6732632423543772848170429916717,
-		SELU_LAMBDA = 1.0507009873554804934193349852946;
+		SELU_LAMBDA = 1.0507009873554804934193349852946,
+		SMAE_DELTA = 2;									// huber loss delta
 
-	/* Utility */
+	/* Utility + Trigonometry */
 	long double max(long double* data, const int count);
+	long double logCosh(long double x);
 	long double coth(long double x);
 	long double sech(long double x);
 	long double csch(long double x);
@@ -33,6 +35,11 @@ namespace Transforms
 	long double acothDerivative(long double x);
 	long double asechDerivative(long double x);
 	long double acschDerivative(long double x);
+	
+	/*
+		Activations
+	*/
+	
 	/* NOP */
 	long double identity(long double x);
 	long double identityDerivative(long double x);
@@ -72,5 +79,15 @@ namespace Transforms
 	/* Softmax*/
 	long double* softmax(long double* data, const int count);
 	Matrix& softmaxDerivative(Matrix& matrix);
+
+	/* 
+		Loss Function 
+	*/
+
+	long double meanSquareLoss(Matrix& y, Matrix& truth);		// l2 loss
+	long double meanAbsoluteLoss(Matrix& y, Matrix& truth);		// l1 loss
+	long double smoothMeanAbsoluteLoss(Matrix& y, Matrix& truth);	// huber loss
+	long double logCoshLoss(Matrix& y, Matrix& truth);
+	long double crossEntropyLoss(Matrix& y, Matrix& truth);
 };
 #endif

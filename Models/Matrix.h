@@ -27,6 +27,7 @@ public:
 	int getCols();
 	int getCount();
 	long double getTrace();
+	long double getSum();
 	long double* getData();
 	Matrix& getDimensions(int& rows, int& cols);
 	inline long double& get(int row, int col) const;
