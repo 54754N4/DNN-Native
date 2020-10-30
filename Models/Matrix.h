@@ -13,6 +13,7 @@ public:
 	Matrix(int row, int col);
 	Matrix(int row, int col, const long double initial);
 	Matrix(int row, int col, const long double* results);
+	Matrix(const Matrix& matrix);
 	template<int r, int c>
 	Matrix(long double(&data)[r][c]);
 	~Matrix();

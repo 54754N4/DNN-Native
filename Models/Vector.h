@@ -11,6 +11,7 @@ public:
 	Vector(int size);
 	Vector(int size, const double initial);
 	Vector(long double* data, int count);
+	Vector(const Vector& vector);
 	template<int c>
 	Vector(long double (&vector)[c]);
 	~Vector();

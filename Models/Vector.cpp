@@ -26,6 +26,13 @@ Vector::Vector(long double* data, int count) : count(count)
 	slice(data);
 }
 
+Vector::Vector(const Vector& vector) : count(vector.count)
+{
+	data = new long double[count];
+	for (int i = 0; i < count; ++i)
+		data[i] = vector.data[i];
+}
+
 Vector::~Vector() 
 {
 	delete[] data;
@@ -35,15 +42,15 @@ Vector::~Vector()
 void Vector::initialize(const long double value)
 {
 	data = new long double[count];
-	for (int i = 0; i < count; i++)
-		*(data + i) = value;
+	for (int i = 0; i < count; ++i)
+		data[i] = value;
 }
 
 void Vector::slice(long double* elements)
 {
 	data = new long double[count];
 	for (int i = 0; i < count; ++i)
-		*(data + i) = *(elements + i);
+		data[i] = elements[i];
 }
 
 /* Accessors */
@@ -65,7 +72,7 @@ int Vector::getLength()
 bool Vector::isZero()
 {
 	for (int i = 0; i < count; ++i)
-		if (*(data + i) != 0)
+		if (data[i] != 0)
 			return false;
 	return true;
 }
@@ -74,7 +81,7 @@ std::string Vector::toString()
 {
 	std::string result = "";
 	for (int i = 0; i < count; ++i)
-		result.append(std::to_string(*(data + i)))
+		result.append(std::to_string(data[i]))
 			.append(row ? " " : "\n");
 	return result;
 }
@@ -83,7 +90,7 @@ long double Vector::getNorm()
 {
 	long double norm = 0;
 	for (int i = 0; i < count; ++i)
-		norm += *(data + i) * *(data + i);
+		norm += data[i] * data[i];
 	return sqrt(norm);
 }
 
@@ -121,7 +128,7 @@ Vector& Vector::transpose()
 const bool Vector::equals(Vector& vector)
 {
 	for (int i = 0; i < count; ++i)
-		if (*(data + i) != *(vector.data + i))
+		if (data[i] != vector.data[i])
 			return false;
 	return true;
 }
@@ -132,7 +139,7 @@ inline Vector& Vector::plus(Vector& vector)
 		throw VectorsDifferentDimensionError(count, vector.count);
 	Vector* result = new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = *(data + i) + *(vector.data + i);
+		(*result)[i] = data[i] + vector.data[i];
 	return *result;
 }
 

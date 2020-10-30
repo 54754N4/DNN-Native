@@ -32,8 +32,15 @@ Matrix::Matrix(int row, int col, const long double initial) : rows(row), cols(co
 Matrix::Matrix(int row, int col, const long double* results) : rows(row), cols(col), count(row * col)
 {
 	data = new long double[count];
-	for (int i = 0; i < count; i++)
-		*(data + i) = *(results + i);
+	for (int i = 0; i < count; ++i)
+		data[i] = results[i];
+}
+
+Matrix::Matrix(const Matrix& matrix) : rows(matrix.rows), cols(matrix.cols), count(matrix.count)
+{
+	data = new long double[count];
+	for (int i = 0; i < count; ++i)
+		data[i] = matrix.data[i];
 }
 
 Matrix::~Matrix() 
@@ -53,7 +60,7 @@ bool Matrix::isDiagonal()
 	if (!isSquare())
 		throw new NotSquareMatrixError();
 	for (int i = 0; i < count; ++i)
-		if ((i / cols != i % cols) && *(data + i) != 0)
+		if ((i / cols != i % cols) && data[i] != 0)
 			return false;
 	return true;
 }
@@ -69,7 +76,7 @@ bool Matrix::isLowerTriangular()
 	if (!isSquare())
 		throw new NotSquareMatrixError();
 	for (int i = 0; i < count; ++i)
-		if (i / cols < i % cols && *(data + i) != 0)
+		if (i / cols < i % cols && data[i] != 0)
 			return false;
 	return true;
 }
@@ -79,7 +86,7 @@ bool Matrix::isUpperTriangular()
 	if (!isSquare())
 		throw new NotSquareMatrixError();
 	for (int i = 0; i < count; ++i)
-		if (i / cols > i % cols && *(data + i) != 0)
+		if (i / cols > i % cols && data[i] != 0)
 			return false;
 	return true;
 }
@@ -110,7 +117,7 @@ long double Matrix::getTrace()
 		throw new NotSquareMatrixError();
 	long double sum = 0;
 	for (int i = 0; i < rows; ++i)
-		sum += *(data + cols * i + i);	// only iterate over diagonal
+		sum += data[cols * i + i];	// only iterate over diagonal
 	return sum;
 }
 
@@ -142,7 +149,7 @@ void Matrix::initialize(const long double value)
 {
 	data = new long double[count];
 	for (int  i = 0; i < count; ++i)
-		*(data + i) = value;
+		data[i] = value;
 }
 
 /* Accessors */
@@ -158,18 +165,18 @@ std::string Matrix::toString()
 {
 	std::ostringstream ss;
 	for (int i = 0; i < count; ++i)
-		ss << *(data + i) << (((i+1)%cols == 0) ? "\n" : "\t");
+		ss << data[i] << (((i+1)%cols == 0) ? "\n" : "\t");
 	return ss.str();
 }
 
 inline long double& Matrix::get(int row, int col) const
 {
-	return *(data + cols * row + col);
+	return data[cols * row + col];
 }
 
 long double Matrix::operator()(int row, int col) const  // for const objects
 { 
-	return *(data + cols * row + col);
+	return data[cols * row + col];
 }
 
 /* Mathematical ops - Row/Col operations */
@@ -180,7 +187,7 @@ Matrix& Matrix::plusRow(Vector& row)
 		throw VectorDimensionError(row.count, cols);
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + i) + row(i % cols);
+		result->data[i] = data[i] + row(i % cols);
 	return *result;
 }
 
@@ -190,7 +197,7 @@ Matrix& Matrix::plusCol(Vector& col)
 		throw VectorDimensionError(col.count, cols);
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + i) + col(i / cols);
+		result->data[i] = data[i] + col(i / cols);
 	return *result;
 }
 
@@ -198,7 +205,7 @@ Matrix& Matrix::timesRow(int row, long double multiplier)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i) 
-		*(result->data + i) = *(data + i) * ((i % cols == row) ? multiplier : 1);
+		result->data[i] = data[i] * ((i % cols == row) ? multiplier : 1);
 	return *result;
 }
 
@@ -206,7 +213,7 @@ Matrix& Matrix::timesCol(int row, long double multiplier)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + i) * ((i / cols == row) ? multiplier : 1);
+		result->data[i] = data[i] * ((i / cols == row) ? multiplier : 1);
 	return *result;
 }
 
@@ -225,7 +232,7 @@ const bool Matrix::equals(const Matrix& matrix) const
 	if ((rows != matrix.rows) || (cols != matrix.cols))
 		return false;
 	for (int i = 0; i < count; ++i) 
-		if (*(data + i) != *(matrix.data + i))
+		if (data[i] != matrix.data[i])
 			return false;
 	return true;
 }
@@ -233,7 +240,7 @@ const bool Matrix::equals(const Matrix& matrix) const
 void Matrix::spit() 
 {
 	for (int i = 0; i < count; ++i)
-		std::cout << *(data + i) << " ";
+		std::cout << data[i] << " ";
 	std::cout << std::endl;
 }
 
@@ -251,7 +258,7 @@ Matrix& Matrix::minor(int row, int col)
 		if (i != row && j != col) {	// ignore deleted row/col
 			x = i > row ? i - 1 : i;
 			y = j > col ? j - 1 : j;
-			*(minor->data + minor->cols * x + y) = *(data + cols * i + j);
+			minor->data[minor->cols * x + y] = data[cols * i + j];
 		}
 	}
 	return *minor;
@@ -262,10 +269,10 @@ inline long double Matrix::det()
 	if (!isSquare())
 		throw new NotSquareMatrixError();
 	if (rows == 2) {				// recursion stop condition
-		long double a = *(data),	// data[0][0]
-			b = *(data + 1),		// data[0][1]
-			c = *(data + 2),		// data[1][0]
-			d = *(data + 3);		// data[1][1]
+		long double a = data[0],	// data[0][0]
+			b = data[1],			// data[0][1]
+			c = data[2],			// data[1][0]
+			d = data[3];			// data[1][1]
 		return a * d - b * c;
 	}
 	/** Recursively calculate the matrix's determinant */
@@ -281,7 +288,7 @@ inline long double Matrix::det()
 		 *			minor = submatrix (after removing the pivot's row and col)
 		*/
 		ptr = &minor(i, 0);
-		determinant += *(data + cols * i) * pow(-1, i) * (*ptr).det();
+		determinant += data[cols * i] * pow(-1, i) * (*ptr).det();
 		delete ptr;
 	}
 	return determinant;
@@ -299,8 +306,8 @@ Matrix& Matrix::cofactor()
 	else if (rows == 2)
 	{
 		long double cofactor[2][2] = {
-			{ *(data + 3), -*(data + 2) },
-			{ -*(data + 1), *(data) }
+			{ data[3], -data[2] },
+			{ -data[1], data[0] }
 		};
 		return *new Matrix(cofactor);
 	}
@@ -308,7 +315,7 @@ Matrix& Matrix::cofactor()
 	for (int i = 0; i < count; ++i)
 	{
 		ptr = &minor(i / cols, i % cols);
-		*(result->data + i) = pow(-1, i) * (*ptr).det();
+		result->data[i] = pow(-1, i) * (*ptr).det();
 		delete ptr;
 	}
 	return *result;
@@ -326,7 +333,7 @@ Matrix& Matrix::transpose()
 {
 	Matrix* result = new Matrix(cols, rows);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + cols * (i % cols) + i / cols);
+		result->data[i] = data[cols * (i % cols) + i / cols];
 	return *result;
 }
 
@@ -343,7 +350,7 @@ inline Matrix& Matrix::plus(Matrix& matrix)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + i) + *(matrix.data + i);
+		result->data[i] = data[i] + matrix.data[i];
 	return *result;
 }
 
@@ -351,7 +358,7 @@ inline Matrix& Matrix::times(long double scalar)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + i) * scalar;
+		result->data[i] = data[i] * scalar;
 	return *result;
 }
 
@@ -359,7 +366,7 @@ inline Matrix& Matrix::minus(Matrix& matrix)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		*(result->data + i) = *(data + i) - *(matrix.data + i);
+		result->data[i] = data[i] - matrix.data[i];
 	return *result;;
 }
 
@@ -378,7 +385,7 @@ inline Matrix& Matrix::times(Matrix& matrix)
 			y = 0;
 			x++;
 		}
-		*(result->data + result->cols * x + y) += *(data + cols * x + z) * *(matrix.data + matrix.cols * z + y);
+		result->data[result->cols * x + y] += data[cols * x + z] * matrix.data[matrix.cols * z + y];
 	}
 	return *result;
 }
@@ -400,7 +407,7 @@ inline Matrix& Matrix::hadamardTimes(Matrix& matrix)
 {
 	Matrix* result = new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = *(data + i) * *(matrix.data + i);
+		(*result)[i] = data[i] * matrix.data[i];
 	return *result;
 }
 
@@ -467,7 +474,7 @@ Matrix& Matrix::identity(int size)
 {
 	Matrix* result = new Matrix(size);
 	for (int i = 0, cols = result->cols, count = result->count; i < count; ++i)
-		*(result->data + i) = (i/cols == i%cols) ? 1 : 0;
+		result->data[i] = (i/cols == i%cols) ? 1 : 0;
 	return *result;
 }
 
@@ -475,6 +482,6 @@ Matrix& Matrix::diagonal(long double* data, int count)
 {
 	Matrix* result = new Matrix(count, count);
 	for (int i = 0, k=0; i < count * count; ++i)
-		*(result->data + i) = (i / count == i % count) ? *(data + k++) : 0;
+		result->data[i] = (i / count == i % count) ? data[k++] : 0;
 	return *result;
 }
