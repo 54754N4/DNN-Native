@@ -8,7 +8,17 @@
 #include "..\..\Models\Matrix.h"
 #include "Transforms.h"
 
-long double max(long double* data, const int count)
+long double Transforms::identity(long double x)
+{
+	return x;
+}
+
+long double Transforms::identityDerivative(long double x)
+{
+	return 1;
+}
+
+long double Transforms::max(long double* data, const int count)
 {
 	long double max = 0;
 	for (int i = 0; i < count; ++i)
@@ -17,101 +27,101 @@ long double max(long double* data, const int count)
 	return max;
 }
 
-long double coth(long double x)
+long double Transforms::coth(long double x)
 {
 	return cosh(x) / sinh(x);
 }
 
-long double sech(long double x)
+long double Transforms::sech(long double x)
 {
 	return 1 / cosh(x);
 }
 
-long double csch(long double x)
+long double Transforms::csch(long double x)
 {
 	return 1 / sinh(x);
 }
 
-long double acoth(long double x)
+long double Transforms::acoth(long double x)
 {
 	return 1 / 2 * log((x + 1) / (x - 1));
 }
 
-long double asech(long double x)
+long double Transforms::asech(long double x)
 {
 	return log(1 / x + sqrt(1 / (x * x) - 1));
 }
 
-long double acsch(long double x) 
+long double Transforms::acsch(long double x)
 {
 	return log(1 / x + sqrt(1 / (x * x) + 1));
 }
 
-long double sinhDerivative(long double x)
+long double Transforms::sinhDerivative(long double x)
 {
 	return cosh(x);
 }
 
-long double coshDerivative(long double x)
+long double Transforms::coshDerivative(long double x)
 {
 	return sinh(x);
 }
 
-long double tanhDerivative(long double x) 
+long double Transforms::tanhDerivative(long double x)
 {
 	long double t = tanh(x);
 	return 1 - (t * t);
 }
 
-long double cothDerivative(long double x)
+long double Transforms::cothDerivative(long double x)
 {
 	long double c = coth(x);
 	return 1 - (c * c);
 }
 
-long double sechDerivative(long double x)
+long double Transforms::sechDerivative(long double x)
 {
 	return -tanh(x) * sech(x);
 }
 
-long double cschDerivative(long double x)
+long double Transforms::cschDerivative(long double x)
 {
 	return -coth(x) * csch(x);
 }
 
-long double asinhDerivative(long double x)
+long double Transforms::asinhDerivative(long double x)
 {
 	return 1 / sqrt(x * x + 1);
 }
 
-long double acoshDerivative(long double x)
+long double Transforms::acoshDerivative(long double x)
 {
 	return 1 / sqrt(x * x - 1);
 }
 
-long double atanhDerivative(long double x)
+long double Transforms::atanhDerivative(long double x)
 {
 	return 1 / (1 - x * x);
 }
 
-long double acothDerivative(long double x)
+long double Transforms::acothDerivative(long double x)
 {
 	return 1 / (1 - x * x);
 }
 
-long double asechDerivative(long double x)
+long double Transforms::asechDerivative(long double x)
 {
 	return 1 /(x * sqrt(1 - x * x));
 }
 
-long double acschDerivative(long double x)
+long double Transforms::acschDerivative(long double x)
 {
 	return 1 / (abs(x) * sqrt(x * x + 1));
 }
 
 /* Activation Functions */
 
-long double* softmax(long double* data, const int count)
+long double* Transforms::softmax(long double* data, const int count)
 {
 	long double sum = 0, 
 		m = max(data, count),
@@ -125,7 +135,7 @@ long double* softmax(long double* data, const int count)
 	return result;
 }
 
-Matrix& softmaxDerivative(Matrix& matrix)
+Matrix& Transforms::softmaxDerivative(Matrix& matrix)
 {
 	if (!matrix.isSquare())
 		throw NotSquareMatrixError();
@@ -144,37 +154,37 @@ Matrix& softmaxDerivative(Matrix& matrix)
 	return *result;
 }
 
-long double sigmoid(long double x)
+long double Transforms::sigmoid(long double x)
 {
 	return x / (1 + abs(x));
 }
 
-long double sigmoidDerivative(long double x)
+long double Transforms::sigmoidDerivative(long double x)
 {
 	return x * (1 - x);
 }
 
-long double relu(long double x)
+long double Transforms::relu(long double x)
 {
 	return x > 0 ? x : 0;
 }
 
-long double reluDerivative(long double x)
+long double Transforms::reluDerivative(long double x)
 {
 	return x > 0 ? 1 : 0;
 }
 
-long double leakyRelu(long double x, long double alpha)
+long double Transforms::leakyRelu(long double x)
 {
-	return x > 0 ? x : alpha * x;
+	return x > 0 ? x : LEAKY_RELU_ALPHA * x;
 }
 
-long double leakyReluDerivative(long double x, long double alpha)
+long double Transforms::leakyReluDerivative(long double x)
 {
-	return x > 0 ? 1 : alpha;
+	return x > 0 ? 1 : LEAKY_RELU_ALPHA;
 }
 
-long double relu6(long double x)
+long double Transforms::relu6(long double x)
 {
 	if (x <= 0)
 		return 0; 
@@ -183,80 +193,80 @@ long double relu6(long double x)
 	return x;
 }
 
-long double relu6Derivative(long double x)
+long double Transforms::relu6Derivative(long double x)
 {
 	return (x <= 0 || x >= 6) ? 0 : 1;
 }
 
-long double elu(long double x, long double alpha)			
+long double Transforms::elu(long double x)
 {
-	return x > 0 ? x : alpha * (exp(x) - 1);
+	return x > 0 ? x : ELU_ALPHA * (exp(x) - 1);
 }
 
-long double eluDerivative(long double x, long double alpha)
+long double Transforms::eluDerivative(long double x)
 {
-	return x > 0 ? 1 : elu(x, alpha) + alpha;
+	return x > 0 ? 1 : elu(x) + ELU_ALPHA;
 }
 
-long double selu(long double x, long double alpha, long double lambda)
+long double Transforms::selu(long double x)
 {
-	return lambda * (x > 0 ? x : (alpha * exp(x) - alpha));
+	return SELU_LAMBDA * (x > 0 ? x : (SELU_ALPHA * exp(x) - SELU_ALPHA));
 }
 
-long double seluDerivative(long double x, long double alpha, long double lambda)
+long double Transforms::seluDerivative(long double x)
 {
-	return lambda * (x > 0 ? 1 : (alpha * exp(x)));
+	return SELU_LAMBDA * (x > 0 ? 1 : (SELU_ALPHA * exp(x)));
 }
 
-long double gelu(long double x)
+long double Transforms::gelu(long double x)
 {
 	return 0.5 * x * (1 + tanh(sqrt(2 / 3.14) * (x + 0.044715 * x * x * x)));
 }
 
-long double geluDerivative(long double x)
+long double Transforms::geluDerivative(long double x)
 {
 	long double s = sech(0.0356774 * x * x * x + 0.797885 * x);
 	return 0.5 * tanh(0.0356774 * x * x * x + 0.797885 * x) + (0.0535161 * x * x * x + 0.398942 * x) * (s * s) + 0.5;
 }
 
-long double cube(long double x)
+long double Transforms::cube(long double x)
 {
 	return x * x * x;
 }
 
-long double cubeDerivative(long double x)
+long double Transforms::cubeDerivative(long double x)
 {
 	return 3 * x * x;
 }
 
-long double swish(long double x)
+long double Transforms::swish(long double x)
 {
 	return x * sigmoid(x);
 }
 
-long double swishDerivative(long double x)
+long double Transforms::swishDerivative(long double x)
 {
 	long double s = sigmoid(x);
 	return 2 * s - s * s;
 }
 
-long double softsign(long double x)
+long double Transforms::softsign(long double x)
 {
 	return x / (1 + abs(x));
 }
 
-long double softsignDerivative(long double x)
+long double Transforms::softsignDerivative(long double x)
 {
 	long double a = abs(x);
 	return (1 + a - x * x / a) / ((1 + a) * (1 + a));
 }
 
-long double softplus(long double x)
+long double Transforms::softplus(long double x)
 {
 	return log(1 + exp(x));
 }
 
-long double softplusDerivative(long double x)
+long double Transforms::softplusDerivative(long double x)
 {
 	return 1 / (1 + exp(-x));
 }
