@@ -10,8 +10,7 @@
 #include "Layers.h"
 
 Layer::Layer(int inputs, int neurons, Matrix& weights, Vector& bias) 
-	: inputs(inputs), neurons(neurons), weights(weights), bias(bias),
-	previousActivation(nullptr), error(nullptr), delta(nullptr) {}
+	: inputs(inputs), neurons(neurons), weights(weights), bias(bias) {}
 
 Layer::~Layer()
 {
@@ -44,7 +43,7 @@ NOP::~NOP() {}
 
 Matrix& NOP::applyActivation(Matrix& x)
 {
-	return x.forEach(Transforms::identity);
+	return x;
 }
 
 Matrix& NOP::applyActivationDerivative(Matrix& x)

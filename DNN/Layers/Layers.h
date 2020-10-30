@@ -5,7 +5,7 @@
 class Layer
 {
 protected:
-	Matrix* previousActivation, *error, *delta;
+	Matrix* previousActivation{ nullptr }, * error{ nullptr }, * delta{ nullptr };
 	Matrix& weights;
 	Vector& bias;
 public:
