@@ -10,11 +10,11 @@
 	- Matrix indexers + iterators + inlined methods
 	- Vectors almost the same but less
 	- Transformations (loss + activation functions)
+	- Layers
 
 ## Doing :
 
-	- Initialisations
-	- Layers
+	- Initialisations (LeCUN, XAVIER GLOROT, Uniform etc..)
 
 ## Todo:
 

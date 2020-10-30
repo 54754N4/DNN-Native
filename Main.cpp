@@ -4,9 +4,8 @@
 #include "Models\Exceptions.h"
 #include "Models\Vector.h"
 #include "Models\Matrix.h"
-#include "DNN\Layers\Layer.h"
 #include "DNN\Layers\Transforms.h"
-#include "DNN\Layers\Sigmoid.h"
+#include "DNN\Layers\Layers.h"
 
 int main(char* args) {
 	/* Test vectors */
@@ -154,5 +153,5 @@ int main(char* args) {
 	std::cout << weights.flatten().toString() << std::endl;
 	std::cout << layer.applyActivation(weights).toString() << std::endl;*/
 
-	std::cout << softmaxDerivative(weights).toString() << std::endl;
+	std::cout << Transforms::softmaxDerivative(weights).toString() << std::endl;
 }

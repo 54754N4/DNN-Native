@@ -30,19 +30,13 @@
     <ClCompile Include="Models\Vector.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="DNN\Layers\Layer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DNN\Initialisers\Initialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DNN\Layers\Transforms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DNN\Layers\Sigmoid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DNN\Layers\Relu.cpp">
+    <ClCompile Include="DNN\Layers\Layers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,19 +50,13 @@
     <ClInclude Include="Models\Vector.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="DNN\Layers\Layer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DNN\Initialisers\Initialiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DNN\Layers\Transforms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DNN\Layers\Sigmoid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DNN\Layers\Relu.h">
+    <ClInclude Include="DNN\Layers\Layers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
