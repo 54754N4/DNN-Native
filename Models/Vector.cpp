@@ -105,24 +105,25 @@ long double Vector::dotProduct(Vector& vector)
 		throw VectorsDifferentDimensionError(count, vector.count);
 	long double dotProduct = 0;
 	for (int i = 0; i < count; ++i)
-		dotProduct += *(data+i) * *(vector.data+i);
+		dotProduct += data[i] * vector.data[i];
 	return dotProduct;
 }
 
-Vector& Vector::hadamardProduct(Vector& vector)
+Vector& Vector::hadamardProduct(Vector& vector, bool inPlace)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
-	Vector* result = new Vector(count);
+	Vector* ptr = inPlace ? this : new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = *(data+i) * *(vector.data+i);
-	return *result;
+		(*ptr)[i] = data[i] * vector.data[i];
+	return *ptr;
 }
 
-Vector& Vector::transpose()
+Vector& Vector::transpose(bool inPlace)
 {
-	row = !row;
-	return *this;
+	Vector* ptr = inPlace ? this : new Vector(count);
+	ptr->row = !row;
+	return *ptr;
 }
 
 const bool Vector::equals(Vector& vector)
@@ -133,32 +134,32 @@ const bool Vector::equals(Vector& vector)
 	return true;
 }
 
-inline Vector& Vector::plus(Vector& vector)
+inline Vector& Vector::plus(Vector& vector, bool inPlace)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
-	Vector* result = new Vector(count);
+	Vector* ptr = inPlace ? this : new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = data[i] + vector.data[i];
-	return *result;
+		(*ptr)[i] = data[i] + vector.data[i];
+	return *ptr;
 }
 
-inline Vector& Vector::times(long double scalar)
+inline Vector& Vector::times(long double scalar, bool inPlace)
 {
-	Vector* result = new Vector(count);
+	Vector* ptr = inPlace ? this : new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = (*data + i) * scalar;
-	return *result;
+		(*ptr)[i] = data[i] * scalar;
+	return *ptr;
 }
 
-inline Vector& Vector::minus(Vector& vector)
+inline Vector& Vector::minus(Vector& vector, bool inPlace)
 {
-	return *this + (vector * (-1));
+	return this->plus(vector.times(-1, inPlace), inPlace);
 }
 
-inline Vector& Vector::times(Vector& vector)
+inline Vector& Vector::times(Vector& vector, bool inPlace)
 {
-	return hadamardProduct(vector);
+	return hadamardProduct(vector, inPlace);
 }
 
 Vector& Vector::operator+(Vector& vector) 

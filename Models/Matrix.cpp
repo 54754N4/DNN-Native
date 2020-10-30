@@ -181,40 +181,40 @@ long double Matrix::operator()(int row, int col) const  // for const objects
 
 /* Mathematical ops - Row/Col operations */
 
-Matrix& Matrix::plusRow(Vector& row) 
+Matrix& Matrix::plusRow(Vector& row, bool inPlace)
 {
 	if (row.count != cols)
 		throw VectorDimensionError(row.count, cols);
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		result->data[i] = data[i] + row(i % cols);
-	return *result;
+		ptr->data[i] = data[i] + row(i % cols);
+	return *ptr;
 }
 
-Matrix& Matrix::plusCol(Vector& col)
+Matrix& Matrix::plusCol(Vector& col, bool inPlace)
 {
 	if (col.count != rows)
 		throw VectorDimensionError(col.count, cols);
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		result->data[i] = data[i] + col(i / cols);
-	return *result;
+		ptr->data[i] = data[i] + col(i / cols);
+	return *ptr;
 }
 
-Matrix& Matrix::timesRow(int row, long double multiplier)
+Matrix& Matrix::timesRow(int row, long double multiplier, bool inPlace)
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i) 
-		result->data[i] = data[i] * ((i % cols == row) ? multiplier : 1);
-	return *result;
+		ptr->data[i] = data[i] * ((i % cols == row) ? multiplier : 1);
+	return *ptr;
 }
 
-Matrix& Matrix::timesCol(int row, long double multiplier)
+Matrix& Matrix::timesCol(int row, long double multiplier, bool inPlace)
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		result->data[i] = data[i] * ((i / cols == row) ? multiplier : 1);
-	return *result;
+		ptr->data[i] = data[i] * ((i / cols == row) ? multiplier : 1);
+	return *ptr;
 }
 
 Matrix& Matrix::swapRows(int first, int second)
@@ -239,8 +239,11 @@ const bool Matrix::equals(const Matrix& matrix) const
 
 void Matrix::spit() 
 {
-	for (int i = 0; i < count; ++i)
+	for (int i = 0; i < count; ++i) {
+		if (i != 0 && i % cols)
+			std::cout << std::endl;
 		std::cout << data[i] << " ";
+	}
 	std::cout << std::endl;
 }
 
@@ -346,12 +349,12 @@ Matrix& Matrix::flatten(bool col)
 
 /* Mathematical ops */
 
-inline Matrix& Matrix::plus(Matrix& matrix)
+inline Matrix& Matrix::plus(Matrix& matrix, bool inPlace)
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		result->data[i] = data[i] + matrix.data[i];
-	return *result;
+		ptr->data[i] = data[i] + matrix.data[i];
+	return *ptr;
 }
 
 inline Matrix& Matrix::times(long double scalar)
@@ -362,12 +365,12 @@ inline Matrix& Matrix::times(long double scalar)
 	return *result;
 }
 
-inline Matrix& Matrix::minus(Matrix& matrix)
+inline Matrix& Matrix::minus(Matrix& matrix, bool inPlace)
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		result->data[i] = data[i] - matrix.data[i];
-	return *result;;
+		ptr->data[i] = data[i] - matrix.data[i];
+	return *ptr;
 }
 
 inline Matrix& Matrix::times(Matrix& matrix)
@@ -403,12 +406,12 @@ inline Matrix& Matrix::power(int exponent)
 	return *result;
 }
 
-inline Matrix& Matrix::hadamardTimes(Matrix& matrix)
+inline Matrix& Matrix::hadamardTimes(Matrix& matrix, bool inPlace)
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		(*result)[i] = data[i] * matrix.data[i];
-	return *result;
+		(*ptr)[i] = data[i] * matrix.data[i];
+	return *ptr;
 }
 
 Matrix& Matrix::inverse()

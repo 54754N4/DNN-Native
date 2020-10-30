@@ -3,9 +3,12 @@
 
 class Vector
 {
-public:
 	/* Attributes */
+	bool row = 1;	// by default create row vectors
+	long double* data;
+public:
 	const int count;
+
 	/* Constructors and destructor */
 	inline Vector();
 	Vector(int size);
@@ -26,12 +29,12 @@ public:
 	const bool equals(Vector& vector);
 	long double dotProduct(Vector& vector);
 	Vector& normalize();
-	Vector& hadamardProduct(Vector& vector);
-	Vector& transpose();
-	inline Vector& plus(Vector& vector);
-	inline Vector& times(long double scalar);
-	inline Vector& minus(Vector& vector);
-	inline Vector& times(Vector& vector);
+	Vector& hadamardProduct(Vector& vector, bool inPlace = false);
+	Vector& transpose(bool inPlace = false);
+	inline Vector& plus(Vector& vector, bool inPlace = false);
+	inline Vector& times(long double scalar, bool inPlace = false);
+	inline Vector& minus(Vector& vector, bool inPlace = false);
+	inline Vector& times(Vector& vector, bool inPlace = false);
 	Vector& operator+(Vector& vector);
 	Vector& operator*(long double value);
 	Vector& operator-(Vector& vector);
@@ -43,9 +46,6 @@ public:
 	inline long double& operator[](int index) { return *(data + index); }
 	inline long double operator[](int index) const { return *(data + index); };
 private:
-	bool row = 1;	// by default create row vectors
-	long double* data;
-
 	void initialize(const long double value);
 	void slice(long double* elements);
 };
