@@ -151,8 +151,8 @@ int main(char* args)
 	Matrix weights(softmaxData);
 	Matrix x(weights);
 	Vector biases(datav1);
-	Sigmoid layer1(4, 4, weights, biases);
-	NOP layer2(4, 4, weights, biases);
+	Sigmoid layer1(4, 4, weights.clone(), biases);
+	NOP layer2(4, 4, weights.clone(), biases);
 	/*std::cout << layer.inputs << "," << layer.neurons << std::endl;
 	std::cout << weights.flatten().toString() << std::endl;*/
 	std::cout << x.toString() << std::endl;

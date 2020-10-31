@@ -355,6 +355,23 @@ Matrix& Matrix::flatten(bool col)
 	return col ? *new Matrix(count, 1, data) : *new Matrix(1, count, data);
 }
 
+void Matrix::cloneFrom(Matrix& matrix)
+{
+	rows = matrix.rows; 
+	cols = matrix.cols;
+	count = matrix.count;
+	data = new long double[count];
+	for (int i = 0; i < count; ++i)
+		data[i] = matrix.data[i];
+}
+
+Matrix& Matrix::clone()
+{
+	Matrix* copy = new Matrix();
+	copy->cloneFrom(*this);
+	return *copy;
+}
+
 /* Mathematical ops */
 
 inline Matrix& Matrix::plus(Matrix& matrix, bool inPlace)
@@ -365,12 +382,12 @@ inline Matrix& Matrix::plus(Matrix& matrix, bool inPlace)
 	return *ptr;
 }
 
-inline Matrix& Matrix::times(long double scalar)
+inline Matrix& Matrix::times(long double scalar, bool inPlace)
 {
-	Matrix* result = new Matrix(rows, cols);
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
 	for (int i = 0; i < count; ++i)
-		result->data[i] = data[i] * scalar;
-	return *result;
+		ptr->data[i] = data[i] * scalar;
+	return *ptr;
 }
 
 inline Matrix& Matrix::minus(Matrix& matrix, bool inPlace)
@@ -476,7 +493,54 @@ Matrix& Matrix::operator^(Matrix& matrix)
 
 Matrix& Matrix::operator/(Matrix& matrix)
 {
-	throw divide(matrix);
+	return divide(matrix);
+}
+
+Matrix& Matrix::operator+=(Matrix& matrix)
+{
+	return plus(matrix, true);
+}
+
+Matrix& Matrix::operator*=(long double scalar)
+{
+	return times(scalar, true);
+}
+
+Matrix& Matrix::operator-=(Matrix& matrix)
+{
+	return minus(matrix, true);
+}
+
+Matrix& Matrix::operator*=(Matrix& matrix)
+{
+	Matrix* result = &times(matrix);
+	cloneFrom(*result);
+	delete result;
+	return *this;
+}
+
+Matrix& Matrix::operator^=(int exponent)
+{
+	Matrix* result = &power(exponent);
+	cloneFrom(*result);
+	delete result;
+	return *this;
+}
+
+Matrix& Matrix::operator^=(Matrix& matrix)
+{
+	Matrix* result = &times(matrix);
+	cloneFrom(*result);
+	delete result;
+	return *this;
+}
+
+Matrix& Matrix::operator/=(Matrix& matrix)
+{
+	Matrix* result = &divide(matrix);
+	cloneFrom(*result);
+	delete result;
+	return *this;
 }
 
 /* Static */

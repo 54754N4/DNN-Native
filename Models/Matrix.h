@@ -6,7 +6,7 @@ class Matrix
 	/* Attributes */
 	long double* data;
 public:
-	const int rows, cols, count;
+	int rows, cols, count;
 
 	/* Constructors and destructor */
 	inline Matrix();
@@ -37,6 +37,8 @@ public:
 	template<class Function>
 	Matrix& forEachIndexed(Function operation, bool inPlace = false);	// input: int, int, double	| output: double
 	/* Utility methods */
+	void cloneFrom(Matrix& matrix);
+	Matrix& clone();
 	const bool isDiagonal(int index);
 	Matrix& indexToCoords(int index, int* outRow, int* outCol);
 	std::string toString();
@@ -49,7 +51,7 @@ public:
 	Matrix& timesRow(int row, long double multiplier, bool inPlace = false);
 	Matrix& timesCol(int row, long double multiplier, bool inPlace = false);
 	inline Matrix& plus(Matrix& matrix, bool inPlace = false);
-	inline Matrix& times(long double scalar);
+	inline Matrix& times(long double scalar, bool inPlace = false);
 	inline Matrix& minus(Matrix& matrix, bool inPlace = false);
 	inline Matrix& times(Matrix& matrix);
 	inline Matrix& power(int exponent);
@@ -63,6 +65,13 @@ public:
 	Matrix& operator^(int exponent);				// power
 	Matrix& operator^(Matrix& matrix);				// hadamard
 	Matrix& operator/(Matrix& matrix);				// division
+	Matrix& operator+=(Matrix& matrix);				
+	Matrix& operator*=(long double scalar);			
+	Matrix& operator-=(Matrix& matrix);				
+	Matrix& operator*=(Matrix& matrix);				
+	Matrix& operator^=(int exponent);				
+	Matrix& operator^=(Matrix& matrix);				
+	Matrix& operator/=(Matrix& matrix);				
 	/* Static */
 	static Matrix& identity(int size);
 	static Matrix& diagonal(long double* data, int count);
