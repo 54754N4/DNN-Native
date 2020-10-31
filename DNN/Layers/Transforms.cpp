@@ -326,6 +326,5 @@ long double Transforms::logCoshLoss(Matrix& y, Matrix& truth)
 
 long double Transforms::crossEntropyLoss(Matrix& y, Matrix& truth)
 {
-	return -y.forEach(log2l).hadamardTimes(truth).getSum() / y.count;
-
+	return -y.forEach(log2l).hadamardTimes(truth, true).getSum() / y.count;
 }

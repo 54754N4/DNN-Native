@@ -81,7 +81,7 @@ namespace Transforms
 	Matrix& softmaxDerivative(Matrix& matrix);
 
 	/* 
-		Loss Function 
+		Loss Functions
 	*/
 
 	long double meanSquareLoss(Matrix& y, Matrix& truth);		// l2 loss
@@ -89,5 +89,6 @@ namespace Transforms
 	long double smoothMeanAbsoluteLoss(Matrix& y, Matrix& truth);	// huber loss
 	long double logCoshLoss(Matrix& y, Matrix& truth);
 	long double crossEntropyLoss(Matrix& y, Matrix& truth);
+	/*long double kullbackLeiblerLoss(Matrix& y, Matrix& truth);*/
 };
 #endif
