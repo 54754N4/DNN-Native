@@ -8,14 +8,11 @@
 #include "..\..\Models\Matrix.h"
 #include "Transforms.h"
 
-long double Transforms::identity(long double x)
+void Transforms::swap(long double& a, long double& b)
 {
-	return x;
-}
-
-long double Transforms::identityDerivative(long double x)
-{
-	return 1;
+	long double temp = a;
+	a = b;
+	b = temp;
 }
 
 long double Transforms::max(long double* data, const int count)
@@ -25,6 +22,16 @@ long double Transforms::max(long double* data, const int count)
 		if (data[i] > max)
 			max = data[i];
 	return max;
+}
+
+long double Transforms::identity(long double x)
+{
+	return x;
+}
+
+long double Transforms::identityDerivative(long double x)
+{
+	return 1;
 }
 
 long double Transforms::logCosh(long double x)

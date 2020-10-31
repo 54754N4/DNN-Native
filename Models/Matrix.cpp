@@ -6,6 +6,7 @@
 #include "Exceptions.h"
 #include "Vector.h"
 #include "Matrix.h"
+#include "..\DNN\Layers\Transforms.h"
 
 /* Constructors and destructor */
 
@@ -227,12 +228,44 @@ Matrix& Matrix::timesCol(int row, long double multiplier, bool inPlace)
 
 Matrix& Matrix::swapRows(int first, int second)
 {
-	throw new NotYetImplementedError();
+	if (first < 0 || first >= rows)
+		throw new IndexOutOfBoundsError(first);
+	if (second < 0 || second >= rows)
+		throw new IndexOutOfBoundsError(second);
+	long double* ptr1 = nullptr, * ptr2 = nullptr;
+	for (int i = 0; i < count; ++i)
+	{
+		if (ptr1 != nullptr && ptr2 != nullptr)
+			break;
+		else if (ptr1 == nullptr && i / cols == first)
+			ptr1 = &data[i];
+		else if (ptr2 == nullptr && i / cols == second)
+			ptr2 = &data[i];
+	}
+	for (int i = 0; i < cols; ++i, ++ptr1, ++ptr2)
+		Transforms::swap(*ptr1, *ptr2);
+	return *this;
 }
 
 Matrix& Matrix::swapCols(int first, int second)
 {
-	throw new NotYetImplementedError();
+	if (first < 0 || first >= cols)
+		throw new IndexOutOfBoundsError(first);
+	if (second < 0 || second >= cols)
+		throw new IndexOutOfBoundsError(second);
+	long double* ptr1 = nullptr, * ptr2 = nullptr;
+	for (int i = 0; i < count; ++i)
+	{
+		if (ptr1 != nullptr && ptr2 != nullptr)
+			break;
+		else if (ptr1 == nullptr && i % cols == first)
+			ptr1 = &data[i];
+		else if (ptr2 == nullptr && i % cols == second)
+			ptr2 = &data[i];
+	}
+	for (int i = 0; i < rows; ++i, ptr1 += cols, ptr2 += cols)
+		Transforms::swap(*ptr1, *ptr2);
+	return *this;
 }
 
 const bool Matrix::equals(const Matrix& matrix) const

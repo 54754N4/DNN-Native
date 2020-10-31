@@ -7,6 +7,7 @@
 		- isSquare/Diagonal/UpperTriangle/LowerTriangle
 		- trace/transpose/cofactor/adjugate
 		- minor matrix + determinant
+		- Row/col swapping
 	- Matrix indexers + iterators + inlined methods
 	- Vectors almost the same but less
 	- Transformations (loss + activation functions)
@@ -15,15 +16,12 @@
 ## Doing :
 
 	- Initialisations (LeCUN, XAVIER GLOROT, Uniform etc..)
+	- Row/col operations:
+		- inserting
 
 ## Todo:
 
-#### Math :
-
-	- Row/col operations:
-		- swapping
-		- inserting
-
 #### DNN :
 	
+	- Optimisers ?
 	- DNN
