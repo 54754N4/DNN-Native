@@ -23,6 +23,7 @@ public:
 	bool isDiagonal();
 	bool isLowerTriangular();
 	bool isUpperTriangular();
+	float getSparsity();
 	int getRows();
 	int getCols();
 	int getCount();
@@ -85,6 +86,10 @@ public:
 	Matrix& operator^=(Matrix& matrix);				
 	Matrix& operator/=(Matrix& matrix);				
 	/* Static */
+	static Matrix& zeros(int size);
+	static Matrix& zeros(int row, int col);
+	static Matrix& ones(int size);
+	static Matrix& ones(int row, int col);
 	static Matrix& identity(int size);
 	static Matrix& diagonal(long double* data, int count);
 	/* Inline operators */

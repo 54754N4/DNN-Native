@@ -152,13 +152,12 @@ int main(char* args)
 	Matrix x(weights);
 	Vector biases(biasData);
 	biases.transpose(true);
-	//weights += weights;
 	std::cout << (weights + weights).toString() << std::endl;
 	std::cout << ((weights + weights) == weights * 2 ? "True" : "False") << std::endl;
-	//weights += biases;
 	std::cout << biases.toString() << std::endl;
 	std::cout << (weights + biases).toString() << std::endl;
-	
+	std::cout << Matrix::zeros(3).insertCol(0, biases).getSparsity() << std::endl;
+
 	//Layers::Sigmoid layer1(4, 4, weights.clone(), biases);
 	//Layers::NOP layer2(4, 4, weights.clone(), biases);
 	///*std::cout << layer1.inputs << "," << layer1.neurons << std::endl;

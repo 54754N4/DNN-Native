@@ -92,6 +92,14 @@ bool Matrix::isUpperTriangular()
 	return true;
 }
 
+float Matrix::getSparsity()
+{
+	int zeros = 0;
+	for (int i = 0; i < count; ++i)
+		zeros += data[i] == 0;
+	return zeros / (float)count;
+}
+
 int Matrix::getRows() 
 {
 	return rows;
@@ -603,6 +611,27 @@ Matrix& Matrix::operator/=(Matrix& matrix)
 }
 
 /* Static */
+
+Matrix& Matrix::zeros(int size)
+{
+	return zeros(size, size);
+}
+
+Matrix& Matrix::zeros(int row, int col)
+{
+	return *new Matrix(row, col, (long double) 0);
+}
+
+Matrix& Matrix::ones(int size)
+{
+	return ones(size, size);
+}
+
+Matrix& Matrix::ones(int row, int col)
+{
+	return *new Matrix(row, col, (long double) 1);
+}
+
 
 Matrix& Matrix::identity(int size) 
 {
