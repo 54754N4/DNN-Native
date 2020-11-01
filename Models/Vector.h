@@ -20,8 +20,8 @@ public:
 	~Vector();
 	/* Accessors */
 	bool isZero();
-	inline bool isRow();
-	inline bool isColumn();
+	bool isRow();
+	bool isColumn();
 	int getLength();
 	long double getNorm();
 	std::string toString();

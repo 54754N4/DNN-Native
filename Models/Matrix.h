@@ -36,6 +36,14 @@ public:
 	Matrix& forEach(Function operation, bool inPlace = false);			// input: double			| output: double
 	template<class Function>
 	Matrix& forEachIndexed(Function operation, bool inPlace = false);	// input: int, int, double	| output: double
+	/* Special operations */
+	Matrix& minor(int row, int column);
+	inline long double det();
+	Matrix& transpose();
+	Matrix& cofactor();
+	Matrix& adjugate();
+	/* Other */
+	Matrix& flatten(bool col = true);
 	/* Utility methods */
 	void cloneFrom(Matrix& matrix);
 	Matrix& clone();
@@ -60,6 +68,7 @@ public:
 	inline Matrix& hadamardTimes(Matrix& matrix, bool inPlace = false);
 	Matrix& inverse();								// should i inline
 	inline Matrix& divide(Matrix& matrix);
+	Matrix& operator+(Vector& vector);
 	Matrix& operator+(Matrix& matrix);				// addition
 	Matrix& operator*(long double scalar);			// scalar multiplication
 	Matrix& operator-(Matrix& matrix);				// substraction
@@ -67,6 +76,7 @@ public:
 	Matrix& operator^(int exponent);				// power
 	Matrix& operator^(Matrix& matrix);				// hadamard
 	Matrix& operator/(Matrix& matrix);				// division
+	Matrix& operator+=(Vector& vector);
 	Matrix& operator+=(Matrix& matrix);				
 	Matrix& operator*=(long double scalar);			
 	Matrix& operator-=(Matrix& matrix);				
@@ -77,14 +87,6 @@ public:
 	/* Static */
 	static Matrix& identity(int size);
 	static Matrix& diagonal(long double* data, int count);
-	/* Special operations */
-	Matrix& minor(int row, int column);
-	inline long double det();
-	Matrix& transpose();
-	Matrix& cofactor();
-	Matrix& adjugate();
-	/* Other */
-	Matrix& flatten(bool col=true);
 	/* Inline operators */
 	inline const bool operator==(Matrix& matrix) { return equals(matrix); };
 	inline const bool operator==(const Matrix& matrix) const { return equals(matrix); };

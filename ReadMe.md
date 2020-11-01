@@ -16,10 +16,11 @@
 ## Doing :
 
 	- Initialisations (LeCUN, XAVIER GLOROT, Uniform etc..)
+	- DNN
 
 ## Todo:
 
 #### DNN :
 	
 	- Optimisers ?
-	- DNN
+	

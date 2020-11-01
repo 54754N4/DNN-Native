@@ -147,17 +147,25 @@ int main(char* args)
 		{4,5,6},
 		{7,8,9}
 	};
-	long double biasData[3] = { 9, 9, 9 };
+	long double biasData[3] = { 1, 2, 3 };
 	Matrix weights(softmaxData);
 	Matrix x(weights);
 	Vector biases(biasData);
-	Layers::Sigmoid layer1(4, 4, weights.clone(), biases);
-	Layers::NOP layer2(4, 4, weights.clone(), biases);
-	/*std::cout << layer1.inputs << "," << layer1.neurons << std::endl;
-	std::cout << weights.flatten().toString() << std::endl;*/
-	std::cout << x.toString() << std::endl;
-	std::cout << layer1.applyActivation(x).toString() << std::endl;
-	std::cout << layer2.applyActivation(x).toString() << std::endl;
+	biases.transpose(true);
+	//weights += weights;
+	std::cout << (weights + weights).toString() << std::endl;
+	std::cout << ((weights + weights) == weights * 2 ? "True" : "False") << std::endl;
+	//weights += biases;
+	std::cout << biases.toString() << std::endl;
+	std::cout << (weights + biases).toString() << std::endl;
+	
+	//Layers::Sigmoid layer1(4, 4, weights.clone(), biases);
+	//Layers::NOP layer2(4, 4, weights.clone(), biases);
+	///*std::cout << layer1.inputs << "," << layer1.neurons << std::endl;
+	//std::cout << weights.flatten().toString() << std::endl;*/
+	//std::cout << x.toString() << std::endl;
+	//std::cout << layer1.applyActivation(x).toString() << std::endl;
+	//std::cout << layer2.applyActivation(x).toString() << std::endl;
 
 	//std::cout << Transforms::softmaxDerivative(weights).toString() << std::endl;
 

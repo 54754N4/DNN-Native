@@ -515,6 +515,11 @@ Matrix& Matrix::operator+(Matrix& matrix)
 	return plus(matrix);
 }
 
+Matrix& Matrix::operator+(Vector& vector)
+{
+	return vector.isRow() ? plusRow(vector): plusCol(vector);
+}
+
 Matrix& Matrix::operator*(long double value)
 {
 	return times(value);
@@ -548,6 +553,11 @@ Matrix& Matrix::operator/(Matrix& matrix)
 Matrix& Matrix::operator+=(Matrix& matrix)
 {
 	return plus(matrix, true);
+}
+
+Matrix& Matrix::operator+=(Vector& vector)
+{
+	return vector.isRow() ? plusRow(vector, true) : plusCol(vector, true);
 }
 
 Matrix& Matrix::operator*=(long double scalar)
@@ -605,7 +615,7 @@ Matrix& Matrix::identity(int size)
 Matrix& Matrix::diagonal(long double* data, int count)
 {
 	Matrix* result = new Matrix(count, count);
-	for (int i = 0, k=0; i < count * count; ++i)
+	for (int i = 0, k = 0; i < count * count; ++i)
 		result->data[i] = (i / count == i % count) ? data[k++] : 0;
 	return *result;
 }

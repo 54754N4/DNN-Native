@@ -54,12 +54,12 @@ void Vector::slice(long double* elements)
 }
 
 /* Accessors */
-inline bool Vector::isRow()
+bool Vector::isRow()
 {
 	return row;
 }
 
-inline bool Vector::isColumn()
+bool Vector::isColumn()
 {
 	return !row;
 }
