@@ -210,6 +210,22 @@ Matrix& Matrix::plusCol(Vector& col, bool inPlace)
 	return *ptr;
 }
 
+Matrix& Matrix::insertRow(int row, Vector& idata, bool inPlace)
+{
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
+	for (int i = 0; i < count; ++i)
+		ptr->data[i] = (i / cols == row) ? idata(i % cols) : data[i];
+	return *ptr;
+}
+
+Matrix& Matrix::insertCol(int col, Vector& idata, bool inPlace)
+{
+	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);
+	for (int i = 0; i < count; ++i)
+		ptr->data[i] = (i % cols == col) ? idata(i % cols) : data[i];
+	return *ptr;
+}
+
 Matrix& Matrix::timesRow(int row, long double multiplier, bool inPlace)
 {
 	Matrix* ptr = inPlace ? this : new Matrix(rows, cols);

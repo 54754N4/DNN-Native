@@ -46,6 +46,8 @@ public:
 	const bool equals(const Matrix& matrix) const;
 	Matrix& plusRow(Vector& row, bool inPlace = false);
 	Matrix& plusCol(Vector& col, bool inPlace = false);
+	Matrix& insertRow(int row, Vector& data, bool inPlace = false);
+	Matrix& insertCol(int col, Vector& data, bool inPlace = false);
 	Matrix& swapRows(int first, int second);
 	Matrix& swapCols(int first, int second);
 	Matrix& timesRow(int row, long double multiplier, bool inPlace = false);

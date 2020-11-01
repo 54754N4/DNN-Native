@@ -147,10 +147,10 @@ int main(char* args)
 		{4,5,6},
 		{7,8,9}
 	};
-
+	long double biasData[3] = { 9, 9, 9 };
 	Matrix weights(softmaxData);
 	Matrix x(weights);
-	Vector biases(datav1);
+	Vector biases(biasData);
 	/*Sigmoid layer1(4, 4, weights.clone(), biases);
 	NOP layer2(4, 4, weights.clone(), biases);
 	std::cout << layer1.inputs << "," << layer1.neurons << std::endl;
@@ -162,5 +162,8 @@ int main(char* args)
 	std::cout << Transforms::softmaxDerivative(weights).toString() << std::endl;*/
 
 	std::cout << weights.toString() << std::endl;
-	std::cout << weights.swapCols(0, 2).toString() << std::endl;
+	//std::cout << weights.swapCols(0, 2).toString() << std::endl;
+	std::cout << biases.toString() << std::endl;
+	std::cout << weights.insertCol(0, biases, true).toString() << std::endl;
+
 }
