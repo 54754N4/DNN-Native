@@ -155,6 +155,7 @@
     <ClInclude Include="Models\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DNN\Layers\Layers.tpp" />
     <None Include="Models\Matrix.tpp" />
     <None Include="Models\Vector.tpp" />
   </ItemGroup>

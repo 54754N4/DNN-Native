@@ -43,42 +43,67 @@ namespace Transforms
 	
 	/* NOP */
 	long double identity(long double x);
+	Matrix& identitym(Matrix& x);
 	long double identityDerivative(long double x);
+	Matrix& identityDerivativem(Matrix& x);
 	/* Sigmoid */
 	long double sigmoid(long double x);
+	Matrix& sigmoidm(Matrix& x);
 	long double sigmoidDerivative(long double x);
+	Matrix& sigmoidDerivativem(Matrix& x);
 	/* ReLU */
 	long double relu(long double x);
+	Matrix& relum(Matrix& x);
 	long double reluDerivative(long double x);
+	Matrix& reluDerivativem(Matrix& x);
 	/* LeakyReLU */
 	long double leakyRelu(long double x);
+	Matrix& leakyRelum(Matrix& x);
 	long double leakyReluDerivative(long double x);
+	Matrix& leakyReluDerivativem(Matrix& x);
 	/* Relu6 */
 	long double relu6(long double x);
+	Matrix& relu6m(Matrix& x);
 	long double relu6Derivative(long double x);
+	Matrix& relu6Derivativem(Matrix& x);
 	/* ELU */
-	long double elu(long double x);					
+	long double elu(long double x);
+	Matrix& elum(Matrix& x);
 	long double eluDerivative(long double x);
+	Matrix& eluDerivativem(Matrix& x);
 	/* Scaled ELU */
 	long double selu(long double x);
+	Matrix& selum(Matrix& x);
 	long double seluDerivative(long double x);
+	Matrix& seluDerivativem(Matrix& x);
 	/* Gaussian ELU */
 	long double gelu(long double x);
+	Matrix& gelum(Matrix& x);
 	long double geluDerivative(long double x);
+	Matrix& geluDerivativem(Matrix& x);
 	/* Cube */
 	long double cube(long double x);
+	Matrix& cubem(Matrix& x);
 	long double cubeDerivative(long double x);
+	Matrix& cubeDerivativem(Matrix& x);
 	/* Swish */
 	long double swish(long double x);
+	Matrix& swishm(Matrix& x);
 	long double swishDerivative(long double x);
+	Matrix& swishDerivativem(Matrix& x);
 	/* Softsign */
 	long double softsign(long double x);
+	Matrix& softsignm(Matrix& x);
 	long double softsignDerivative(long double x);
+	Matrix& softsignDerivativem(Matrix& x);
 	/* Softplus */
 	long double softplus(long double x);
+	Matrix& softplusm(Matrix& x);
 	long double softplusDerivative(long double x);
+	Matrix& softplusDerivativem(Matrix& x);
 	/* Softmax*/
 	long double* softmax(long double* data, const int count);
+	Matrix& softmax(Matrix& x);
 	Matrix& softmaxDerivative(Matrix& matrix);
 
 	/* 

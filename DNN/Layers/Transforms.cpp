@@ -29,9 +29,19 @@ long double Transforms::identity(long double x)
 	return x;
 }
 
+Matrix& Transforms::identitym(Matrix& x)
+{
+	return x;
+}
+
 long double Transforms::identityDerivative(long double x)
 {
 	return 1;
+}
+
+Matrix& Transforms::identityDerivativem(Matrix& x)
+{
+	return x.forEach(identityDerivative);
 }
 
 long double Transforms::logCosh(long double x)
@@ -171,9 +181,19 @@ long double Transforms::sigmoid(long double x)
 	return x / (1 + abs(x));
 }
 
+Matrix& Transforms::sigmoidm(Matrix& x)
+{
+	return x.forEach(sigmoid);
+}
+
 long double Transforms::sigmoidDerivative(long double x)
 {
 	return x * (1 - x);
+}
+
+Matrix& Transforms::sigmoidDerivativem(Matrix& x)
+{
+	return x.forEach(sigmoidDerivative);
 }
 
 long double Transforms::relu(long double x)
@@ -181,9 +201,19 @@ long double Transforms::relu(long double x)
 	return x > 0 ? x : 0;
 }
 
+Matrix& Transforms::relum(Matrix& x)
+{
+	return x.forEach(relu);
+}
+
 long double Transforms::reluDerivative(long double x)
 {
 	return x > 0 ? 1 : 0;
+}
+
+Matrix& Transforms::reluDerivativem(Matrix& x)
+{
+	return x.forEach(reluDerivative);
 }
 
 long double Transforms::leakyRelu(long double x)
@@ -191,9 +221,19 @@ long double Transforms::leakyRelu(long double x)
 	return x > 0 ? x : LEAKY_RELU_ALPHA * x;
 }
 
+Matrix& Transforms::leakyRelum(Matrix& x)
+{
+	return x.forEach(leakyRelu);
+}
+
 long double Transforms::leakyReluDerivative(long double x)
 {
 	return x > 0 ? 1 : LEAKY_RELU_ALPHA;
+}
+
+Matrix& Transforms::leakyReluDerivativem(Matrix& x)
+{
+	return x.forEach(leakyReluDerivative);
 }
 
 long double Transforms::relu6(long double x)
@@ -205,9 +245,19 @@ long double Transforms::relu6(long double x)
 	return x;
 }
 
+Matrix& Transforms::relu6m(Matrix& x)
+{
+	return x.forEach(relu6);
+}
+
 long double Transforms::relu6Derivative(long double x)
 {
 	return (x <= 0 || x >= 6) ? 0 : 1;
+}
+
+Matrix& Transforms::relu6Derivativem(Matrix& x)
+{
+	return x.forEach(relu6Derivative);
 }
 
 long double Transforms::elu(long double x)
@@ -215,9 +265,19 @@ long double Transforms::elu(long double x)
 	return x > 0 ? x : ELU_ALPHA * (exp(x) - 1);
 }
 
+Matrix& Transforms::elum(Matrix& x)
+{
+	return x.forEach(elu);
+}
+
 long double Transforms::eluDerivative(long double x)
 {
 	return x > 0 ? 1 : elu(x) + ELU_ALPHA;
+}
+
+Matrix& Transforms::eluDerivativem(Matrix& x)
+{
+	return x.forEach(eluDerivative);
 }
 
 long double Transforms::selu(long double x)
@@ -225,14 +285,29 @@ long double Transforms::selu(long double x)
 	return SELU_LAMBDA * (x > 0 ? x : (SELU_ALPHA * exp(x) - SELU_ALPHA));
 }
 
+Matrix& Transforms::selum(Matrix& x)
+{
+	return x.forEach(selu);
+}
+
 long double Transforms::seluDerivative(long double x)
 {
 	return SELU_LAMBDA * (x > 0 ? 1 : (SELU_ALPHA * exp(x)));
 }
 
+Matrix& Transforms::seluDerivativem(Matrix& x)
+{
+	return x.forEach(seluDerivative);
+}
+
 long double Transforms::gelu(long double x)
 {
 	return 0.5 * x * (1 + tanh(sqrt(2 / 3.14) * (x + 0.044715 * x * x * x)));
+}
+
+Matrix& Transforms::gelum(Matrix& x)
+{
+	return x.forEach(gelu);
 }
 
 long double Transforms::geluDerivative(long double x)
@@ -242,9 +317,19 @@ long double Transforms::geluDerivative(long double x)
 	return 0.5 * tanh(val) + m + 0.5;
 }
 
+Matrix& Transforms::geluDerivativem(Matrix& x)
+{
+	return x.forEach(geluDerivative);
+}
+
 long double Transforms::cube(long double x)
 {
 	return x * x * x;
+}
+
+Matrix& Transforms::cubem(Matrix& x)
+{
+	return x.forEach(cube);
 }
 
 long double Transforms::cubeDerivative(long double x)
@@ -252,9 +337,19 @@ long double Transforms::cubeDerivative(long double x)
 	return 3 * x * x;
 }
 
+Matrix& Transforms::cubeDerivativem(Matrix& x)
+{
+	return x.forEach(cubeDerivative);
+}
+
 long double Transforms::swish(long double x)
 {
 	return x * sigmoid(x);
+}
+
+Matrix& Transforms::swishm(Matrix& x)
+{
+	return x.forEach(swish);
 }
 
 long double Transforms::swishDerivative(long double x)
@@ -263,9 +358,19 @@ long double Transforms::swishDerivative(long double x)
 	return s*(2-s);
 }
 
+Matrix& Transforms::swishDerivativem(Matrix& x)
+{
+	return x.forEach(swishDerivative);
+}
+
 long double Transforms::softsign(long double x)
 {
 	return x / (1 + abs(x));
+}
+
+Matrix& Transforms::softsignm(Matrix& x)
+{
+	return x.forEach(softsign);
 }
 
 long double Transforms::softsignDerivative(long double x)
@@ -274,15 +379,35 @@ long double Transforms::softsignDerivative(long double x)
 	return (app - x * x / a) / (app * app);
 }
 
+Matrix& Transforms::softsignDerivativem(Matrix& x)
+{
+	return x.forEach(softsignDerivative);
+}
+
 long double Transforms::softplus(long double x)
 {
 	return log(1 + exp(x));
+}
+
+Matrix& Transforms::softplusm(Matrix& x)
+{
+	return x.forEach(softplus);
 }
 
 long double Transforms::softplusDerivative(long double x)
 {
 	long double e = exp(x);
 	return e / (e + 1);				// 1 / (1 + exp(-x)) <===> exp(x)/(exp(x)+1)
+}
+
+Matrix& Transforms::softplusDerivativem(Matrix& x)
+{
+	return x.forEach(softplusDerivative);
+}
+
+Matrix& Transforms::softmax(Matrix& x)
+{
+	throw new NotYetImplementedError();
 }
 
 /* Loss Functions */

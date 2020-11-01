@@ -67,5 +67,6 @@
     <None Include="Models\Vector.tpp">
       <Filter>Source Files\Models</Filter>
     </None>
+    <None Include="DNN\Layers\Layers.tpp" />
   </ItemGroup>
 </Project>

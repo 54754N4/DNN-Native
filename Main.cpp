@@ -151,19 +151,20 @@ int main(char* args)
 	Matrix weights(softmaxData);
 	Matrix x(weights);
 	Vector biases(biasData);
-	/*Sigmoid layer1(4, 4, weights.clone(), biases);
-	NOP layer2(4, 4, weights.clone(), biases);
-	std::cout << layer1.inputs << "," << layer1.neurons << std::endl;
-	std::cout << weights.flatten().toString() << std::endl;
+	Layers::Sigmoid layer1(4, 4, weights.clone(), biases);
+	Layers::NOP layer2(4, 4, weights.clone(), biases);
+	/*std::cout << layer1.inputs << "," << layer1.neurons << std::endl;
+	std::cout << weights.flatten().toString() << std::endl;*/
 	std::cout << x.toString() << std::endl;
 	std::cout << layer1.applyActivation(x).toString() << std::endl;
 	std::cout << layer2.applyActivation(x).toString() << std::endl;
 
-	std::cout << Transforms::softmaxDerivative(weights).toString() << std::endl;*/
+	//std::cout << Transforms::softmaxDerivative(weights).toString() << std::endl;
 
-	std::cout << weights.toString() << std::endl;
-	//std::cout << weights.swapCols(0, 2).toString() << std::endl;
-	std::cout << biases.toString() << std::endl;
-	std::cout << weights.insertCol(0, biases, true).toString() << std::endl;
+	/* Test swapping + inserting */
+	//std::cout << weights.toString() << std::endl;
+	////std::cout << weights.swapCols(0, 2).toString() << std::endl;
+	//std::cout << biases.toString() << std::endl;
+	//std::cout << weights.insertCol(0, biases, true).toString() << std::endl;
 
 }
