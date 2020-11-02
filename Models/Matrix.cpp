@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <math.h>
+#include <algorithm>
 #include "Exceptions.h"
 #include "Vector.h"
 #include "Matrix.h"
@@ -278,7 +279,7 @@ Matrix& Matrix::swapCols(int first, int second)
 	long double* ptr = nullptr;
 	for (int i = 0; i < count; ++i)
 	{
-		if (ptr == nullptr && i % cols == first)	// mark first row encounter
+		if (ptr == nullptr && i % cols == first)	// mark first col encounter
 			ptr = &data[i];
 		else if (i % cols == second)
 		{	// on second row match, incrementally swap
@@ -643,5 +644,20 @@ Matrix& Matrix::diagonal(long double* data, int count)
 	Matrix* result = new Matrix(count, count);
 	for (int i = 0, k = 0; i < count * count; ++i)
 		result->data[i] = (i / count == i % count) ? data[k++] : 0;
+	return *result;
+}
+
+Matrix& Matrix::spiral(int size)
+{
+	Matrix* result = new Matrix(size, size);
+	for (int i = 0, n = size, layer, x, y; i < result->count; ++i)
+	{
+		x = i / result->cols;
+		y = i % result->cols;
+		layer = std::min(std::min(x, y), std::min(n - 1 - x, n - 1 - y));
+		result->data[i] = (x <= y) ?
+			(n - 2 * layer) * (n - 2 * layer) - (x - layer) - (y - layer) :			// upper right triangle of matrix
+			(n - 2 * layer - 2) * (n - 2 * layer - 2) + (x - layer) + (y - layer);	// lower left triangle of matrix
+	}
 	return *result;
 }

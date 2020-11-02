@@ -171,6 +171,7 @@ int main(char* args)
 	/* Test swapping + inserting */
 	std::cout << weights.toString() << std::endl;
 	std::cout << weights.swapCols(2, 0).toString() << std::endl;
+	std::cout << Matrix::spiral(6).toString() << std::endl;
 	//std::cout << biases.toString() << std::endl;
 	//std::cout << weights.insertCol(0, biases, true).toString() << std::endl;
 
