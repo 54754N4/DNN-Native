@@ -15,6 +15,7 @@
 
 ## Doing :
 
+	- Add col major to row major transformations (or make code more generic)
 	- Initialisations (LeCUN, XAVIER GLOROT, Uniform etc..)
 	- DNN
 

@@ -1,8 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#define TRANSPOSE_MARKERS_HASH_SIZE 128 
-
 class Matrix
 {
 	/* Attributes */
