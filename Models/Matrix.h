@@ -1,6 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#define TRANSPOSE_MARKERS_HASH_SIZE 128 
+
 class Matrix
 {
 	/* Attributes */
@@ -18,17 +20,17 @@ public:
 	Matrix(long double(&data)[r][c]);
 	~Matrix();
 	/* Accessors */
-	bool isSquare();
-	bool isDiagonal();
-	bool isLowerTriangular();
-	bool isUpperTriangular();
-	float getSparsity();
-	int getRows();
-	int getCols();
-	int getCount();
-	long double getTrace();
-	long double getSum();
-	long double* getData();
+	bool isSquare() const;
+	bool isDiagonal() const;
+	bool isLowerTriangular() const;
+	bool isUpperTriangular() const;
+	float getSparsity() const;
+	int getRows() const;
+	int getCols() const;
+	int getCount() const;
+	long double getTrace() const;
+	long double getSum() const;
+	long double* getData() const;
 	Matrix& getDimensions(int& rows, int& cols);
 	inline long double& get(int row, int col) const;
 	/* Iterators */
@@ -37,11 +39,11 @@ public:
 	template<class Function>
 	Matrix& forEachIndexed(Function operation, bool inPlace = false);	// input: int, int, double	| output: double
 	/* Special operations */
-	Matrix& minor(int row, int column);
-	inline long double det();
-	Matrix& transpose();
-	Matrix& cofactor();
-	Matrix& adjugate();
+	Matrix& minor(int row, int column) const;
+	inline long double det() const;
+	Matrix& transpose() const;
+	Matrix& cofactor() const;
+	Matrix& adjugate() const;
 	/* Other */
 	Matrix& flatten(bool col = false, bool inPlace = false);
 	/* Utility methods */

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <math.h>
 #include <algorithm>
+#include <bitset>
 #include "Exceptions.h"
 #include "Vector.h"
 #include "Matrix.h"
@@ -52,12 +53,12 @@ Matrix::~Matrix()
 
 /* Accessors */
 
-bool Matrix::isSquare()
+bool Matrix::isSquare() const
 {
 	return rows == cols;
 }
 
-bool Matrix::isDiagonal() 
+bool Matrix::isDiagonal() const
 {
 	if (!isSquare())
 		throw new NotSquareMatrixError();
@@ -73,7 +74,7 @@ bool Matrix::isDiagonal()
 if all cells where x < y are 0 <==> lower triangular matrix
 if all cells where x > y are 0 <==> upper triangular matrix
 */
-bool Matrix::isLowerTriangular()
+bool Matrix::isLowerTriangular() const
 {
 	if (!isSquare())
 		throw new NotSquareMatrixError();
@@ -83,7 +84,7 @@ bool Matrix::isLowerTriangular()
 	return true;
 }
 
-bool Matrix::isUpperTriangular()
+bool Matrix::isUpperTriangular() const
 {
 	if (!isSquare())
 		throw new NotSquareMatrixError();
@@ -93,7 +94,7 @@ bool Matrix::isUpperTriangular()
 	return true;
 }
 
-float Matrix::getSparsity()
+float Matrix::getSparsity() const
 {
 	int zeros = 0;
 	for (int i = 0; i < count; ++i)
@@ -101,27 +102,27 @@ float Matrix::getSparsity()
 	return zeros / (float)count;
 }
 
-int Matrix::getRows() 
+int Matrix::getRows() const
 {
 	return rows;
 }
 
-int Matrix::getCols()
+int Matrix::getCols() const
 {
 	return cols;
 }
 
-int Matrix::getCount()
+int Matrix::getCount() const
 {
 	return count;
 }
 
-long double* Matrix::getData()
+long double* Matrix::getData() const
 {
 	return data;
 }
 
-long double Matrix::getTrace()
+long double Matrix::getTrace() const
 {
 	if (!isSquare())
 		throw new NotSquareMatrixError();
@@ -131,7 +132,7 @@ long double Matrix::getTrace()
 	return sum;
 }
 
-long double Matrix::getSum()
+long double Matrix::getSum() const
 {
 	long double sum = 0;
 	for (int i = 0; i < count; ++i)
@@ -172,7 +173,7 @@ void Matrix::initialize(const long double value)
 
 /* Accessors */
 
-Matrix& Matrix::getDimensions(int& rows, int& cols) 
+Matrix& Matrix::getDimensions(int& rows, int& cols)
 {
 	rows = this->rows;
 	cols = this->cols;
@@ -259,13 +260,13 @@ Matrix& Matrix::swapRows(int first, int second)
 		throw new IndexOutOfBoundsError(second);
 	if (first == second)
 		throw new DuplicateArgumentError();
-	Transforms::sort(first, second);				// make sure first stores smaller int
+	Transforms::sort(first, second);					// make sure first stores smaller int
 	long double* ptr = nullptr;
 	for (int i = 0; i < count; ++i)
 	{
-		if (ptr == nullptr && i / cols == first)	// mark first row encounter
+		if (ptr == nullptr && i / cols == first)		// mark first row encounter
 			ptr = &data[i];
-		else if (i / cols == second)				// on second row match, incrementally swap
+		else if (ptr != nullptr && i / cols == second)	// on second row match, incrementally swap
 			Transforms::swap(*ptr++, data[i]);
 	}
 	return *this;
@@ -283,9 +284,9 @@ Matrix& Matrix::swapCols(int first, int second)
 	long double* ptr = nullptr;
 	for (int i = 0; i < count; ++i)
 	{
-		if (ptr == nullptr && i % cols == first)	// mark first col encounter
+		if (ptr == nullptr && i % cols == first)		// mark first col encounter
 			ptr = &data[i];
-		else if (i % cols == second)
+		else if (ptr != nullptr && i % cols == second)
 		{	// on second col match, incrementally swap
 			Transforms::swap(*ptr, data[i]);
 			ptr += cols;
@@ -316,7 +317,7 @@ void Matrix::spit()
 
 /* Special opeations */
 
-Matrix& Matrix::minor(int row, int col) 
+Matrix& Matrix::minor(int row, int col) const
 {
 	Matrix* minor = new Matrix(rows - 1, cols - 1);
 	for (int i = 0, j = 0, x, y; i < rows; ++j)
@@ -334,7 +335,7 @@ Matrix& Matrix::minor(int row, int col)
 	return *minor;
 }
 
-inline long double Matrix::det()
+inline long double Matrix::det() const
 {
 	if (!isSquare())
 		throw new NotSquareMatrixError();
@@ -364,7 +365,7 @@ inline long double Matrix::det()
 	return determinant;
 }
 
-Matrix& Matrix::cofactor() 
+Matrix& Matrix::cofactor() const
 {
 	if (!isSquare())
 		throw new NotSquareMatrixError();
@@ -391,7 +392,7 @@ Matrix& Matrix::cofactor()
 	return *result;
 }
 
-Matrix& Matrix::adjugate()
+Matrix& Matrix::adjugate() const
 {
 	Matrix* temp = &cofactor();
 	Matrix& result = temp->transpose();
@@ -399,7 +400,7 @@ Matrix& Matrix::adjugate()
 	return result;
 }
 
-Matrix& Matrix::transpose()
+Matrix& Matrix::transpose() const
 {
 	Matrix* result = new Matrix(cols, rows);
 	for (int i = 0; i < count; ++i)
