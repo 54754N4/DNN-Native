@@ -257,6 +257,8 @@ Matrix& Matrix::swapRows(int first, int second)
 		throw new IndexOutOfBoundsError(first);
 	if (second < 0 || second >= rows)
 		throw new IndexOutOfBoundsError(second);
+	if (first == second)
+		throw new DuplicateArgumentError();
 	Transforms::sort(first, second);				// make sure first stores smaller int
 	long double* ptr = nullptr;
 	for (int i = 0; i < count; ++i)
@@ -275,6 +277,8 @@ Matrix& Matrix::swapCols(int first, int second)
 		throw new IndexOutOfBoundsError(first);
 	if (second < 0 || second >= cols)
 		throw new IndexOutOfBoundsError(second);
+	if (first == second)
+		throw new DuplicateArgumentError();
 	Transforms::sort(first, second);
 	long double* ptr = nullptr;
 	for (int i = 0; i < count; ++i)

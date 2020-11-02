@@ -33,6 +33,13 @@ public:
 	}
 };
 
+class DuplicateArgumentError : std::exception {
+public:
+	const char* what() {
+		return "Duplicate arguments given";
+	}
+};
+
 class NotSquareMatrixError : std::exception {
 public:
 	const char* what() {
