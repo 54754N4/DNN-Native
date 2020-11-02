@@ -175,4 +175,5 @@ int main(char* args)
 	//std::cout << biases.toString() << std::endl;
 	//std::cout << weights.insertCol(0, biases, true).toString() << std::endl;
 
+	std::cout << weights.flatten().toString() << std::endl;
 }

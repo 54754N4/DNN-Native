@@ -5,9 +5,8 @@ class Matrix
 {
 	/* Attributes */
 	long double* data;
-public:
 	int rows, cols, count;
-
+public:
 	/* Constructors and destructor */
 	inline Matrix();
 	Matrix(int size);
@@ -44,7 +43,7 @@ public:
 	Matrix& cofactor();
 	Matrix& adjugate();
 	/* Other */
-	Matrix& flatten(bool col = true);
+	Matrix& flatten(bool col = false, bool inPlace = false);
 	/* Utility methods */
 	void cloneFrom(Matrix& matrix);
 	Matrix& clone();

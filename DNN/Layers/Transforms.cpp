@@ -176,7 +176,7 @@ Matrix& Transforms::softmaxDerivative(Matrix& matrix)
 	*/
 	Matrix* s = &matrix.flatten();
 	Matrix* sT = &s->transpose();
-	Matrix* left = &Matrix::diagonal(matrix.getData(), matrix.count);
+	Matrix* left = &Matrix::diagonal(matrix.getData(), matrix.getCount());
 	Matrix* right = &s->times(*sT);
 	delete s;
 	delete sT;
@@ -426,7 +426,7 @@ long double Transforms::meanSquareLoss(Matrix& y, Matrix& truth)
 	long double mse;
 	Matrix* result = &truth.minus(y);
 	result->forEach([](long double v) -> long double { return v * v; }, true);
-	mse = result->getSum() / result->count;
+	mse = result->getSum() / result->getCount();
 	delete result;
 	return mse;
 }
@@ -436,7 +436,7 @@ long double Transforms::meanAbsoluteLoss(Matrix& y, Matrix& truth)
 	long double mse;
 	Matrix* result = &truth.minus(y);
 	result->forEach([](long double v) -> long double { return abs(v); }, true);
-	mse = result->getSum() / result->count;
+	mse = result->getSum() / result->getCount();
 	delete result;
 	return mse;
 }
@@ -452,7 +452,7 @@ long double Transforms::smoothMeanAbsoluteLoss(Matrix& y, Matrix& truth)
 			1 / 2 * v * v :
 			t * a - 1 / 2 * t * t;
 	}, true);
-	mse = result->getSum() / result->count;
+	mse = result->getSum() / result->getCount();
 	delete result;
 	return mse;
 }
@@ -460,12 +460,12 @@ long double Transforms::smoothMeanAbsoluteLoss(Matrix& y, Matrix& truth)
 long double Transforms::logCoshLoss(Matrix& y, Matrix& truth)
 {
 	Matrix* result = &truth.minus(y);
-	long double mse = result->forEach(logCosh, true).getSum() / result->count;
+	long double mse = result->forEach(logCosh, true).getSum() / result->getCount();
 	delete result;
 	return mse;
 }
 
 long double Transforms::crossEntropyLoss(Matrix& y, Matrix& truth)
 {
-	return -y.forEach(log2l).hadamardTimes(truth, true).getSum() / y.count;
+	return -y.forEach(log2l).hadamardTimes(truth, true).getSum() / y.getCount();
 }

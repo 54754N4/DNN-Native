@@ -282,7 +282,7 @@ Matrix& Matrix::swapCols(int first, int second)
 		if (ptr == nullptr && i % cols == first)	// mark first col encounter
 			ptr = &data[i];
 		else if (i % cols == second)
-		{	// on second row match, incrementally swap
+		{	// on second col match, incrementally swap
 			Transforms::swap(*ptr, data[i]);
 			ptr += cols;
 		}
@@ -405,9 +405,14 @@ Matrix& Matrix::transpose()
 
 /* Other */
 
-Matrix& Matrix::flatten(bool col)
+Matrix& Matrix::flatten(bool col, bool inPlace)
 {
-	return col ? *new Matrix(count, 1, data) : *new Matrix(1, count, data);
+	if (inPlace) {
+		rows = col ? count : 1;
+		cols = col ? 1 : count;
+		return *this;
+	} else
+		return col ? *new Matrix(count, 1, data) : *new Matrix(1, count, data);
 }
 
 void Matrix::cloneFrom(Matrix& matrix)
