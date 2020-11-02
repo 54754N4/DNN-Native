@@ -24,6 +24,15 @@ long double Transforms::max(long double* data, const int count)
 	return max;
 }
 
+void Transforms::sort(int& a, int& b)
+{
+	if (a > b) {
+		int temp = a;
+		a = b;
+		b = temp;
+	}
+}
+
 long double Transforms::identity(long double x)
 {
 	return x;

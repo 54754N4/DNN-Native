@@ -85,13 +85,6 @@ public:
 	Matrix& operator^=(int exponent);				
 	Matrix& operator^=(Matrix& matrix);				
 	Matrix& operator/=(Matrix& matrix);				
-	/* Static */
-	static Matrix& zeros(int size);
-	static Matrix& zeros(int row, int col);
-	static Matrix& ones(int size);
-	static Matrix& ones(int row, int col);
-	static Matrix& identity(int size);
-	static Matrix& diagonal(long double* data, int count);
 	/* Inline operators */
 	inline const bool operator==(Matrix& matrix) { return equals(matrix); };
 	inline const bool operator==(const Matrix& matrix) const { return equals(matrix); };
@@ -105,6 +98,14 @@ public:
 	inline long double& operator()(int row, int col) { return data[cols * row + col]; };
 	/* Debug */
 	void spit();
+	/* Static */
+	static Matrix& zeros(int size);
+	static Matrix& zeros(int row, int col);
+	static Matrix& ones(int size);
+	static Matrix& ones(int row, int col);
+	static Matrix& identity(int size);
+	static Matrix& spiral(int size);
+	static Matrix& diagonal(long double* data, int count);
 private:
 	void initialize(const long double value);
 	inline int asRow(int index);

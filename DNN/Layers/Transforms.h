@@ -16,6 +16,7 @@ namespace Transforms
 
 	/* Utility + Trigonometry */
 	long double max(long double* data, const int count);
+	void sort(int& a, int& b);
 	void swap(long double& a, long double& b);
 	long double logCosh(long double x);
 	long double coth(long double x);
