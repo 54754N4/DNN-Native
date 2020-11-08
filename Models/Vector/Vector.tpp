@@ -6,7 +6,7 @@
 #endif 
 
 template<int c>
-Vector::Vector(long double (&vector)[c]) : row(1), count(c) {
+Vector::Vector(long double (&vector)[c]) : IVector(c) {
 	data = new long double[c];
 	for (int i = 0; i < c; i++)
 		data[i] = vector[i];

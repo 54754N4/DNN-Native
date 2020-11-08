@@ -1,16 +1,17 @@
 #ifndef LAYERS_TPP
 #define LAYERS_TPP
 
-#ifndef LAYERS_TPP
+#ifndef LAYERS_H
 #error __FILE__ should only be included from Layers.h
 #endif 
 
-template<ActivationFunction Forward, ActivationFunction Backward>
-Layer<Forward, Backward>::Layer(int inputs, int neurons, Matrix& weights, Vector& bias)
+
+template<class I, ActivationFunction<I> F, ActivationFunction<I> B>
+Layer<I, F, B>::Layer(int inputs, int neurons, I& weights, Vector& bias)
 	: inputs(inputs), neurons(neurons), weights(weights), bias(bias) {}
 
-template<ActivationFunction Forward, ActivationFunction Backward>
-Layer<Forward, Backward>::~Layer()
+template<class I, ActivationFunction<I> F, ActivationFunction<I> B>
+Layer<I, F, B>::~Layer()
 {
 	delete previousActivation;
 	delete error;
@@ -23,15 +24,40 @@ Layer<Forward, Backward>::~Layer()
   * @param x The input.
   * @return The result.
   */
-template<ActivationFunction Forward, ActivationFunction Backward>
-Matrix& Layer<Forward, Backward>::activate(Matrix& x)
+template<class I, ActivationFunction<I> F, ActivationFunction<I> B>
+I& Layer<I, F, B>::activate(I& x)
 {
-	Matrix* temp1 = &x.times(weights),
-		* temp2 = &temp1->plusRow(bias);
-	delete temp1;
-	previousActivation = &applyActivation(*temp2);
-	delete temp2;
+	I* a = &x.times(weights).plusRow(bias, true);
+	previousActivation = &applyActivation(*a);
+	delete a;
 	return *previousActivation;
 }
+
+//template<class I, ActivationFunction<I> Forward, ActivationFunction<I> Backward>
+//Layer<I, Forward, Backward>::Layer(int inputs, int neurons, I& weights, Vector& bias)
+//	: inputs(inputs), neurons(neurons), weights(weights), bias(bias) {}
+//
+//template<class I, ActivationFunction<I> Forward, ActivationFunction<I> Backward>
+//Layer<I, Forward, Backward>::~Layer()
+//{
+//	delete previousActivation;
+//	delete error;
+//	delete delta;
+//}
+//
+///**
+//  * Calculates the dot product of this layer : X . W + B
+//  * Also saves the result for use in backprop later.
+//  * @param x The input.
+//  * @return The result.
+//  */
+//template<class I, ActivationFunction<I> Forward, ActivationFunction<I> Backward>
+//I& Layer<I, Forward, Backward>::activate(I& x)
+//{
+//	IMatrix<I>* a = &x.times(weights).plusRow(bias, true);
+//	previousActivation = &applyActivation(*a);
+//	delete a;
+//	return *previousActivation;
+//}
 
 #endif

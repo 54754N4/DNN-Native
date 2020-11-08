@@ -4,7 +4,9 @@
 #include <sstream>
 #include <math.h>
 #include "..\..\Models\Exceptions.h"
-#include "..\..\Models\Vector.h"
-#include "..\..\Models\Matrix.h"
+#include "..\..\Models\Vector\IVector.h"
+#include "..\..\Models\Vector\Vector.h"
+#include "..\..\Models\Matrix\IMatrix.h"
+#include "..\..\Models\Matrix\RMMatrix.h"
 #include "Transforms.h"
 #include "Layers.h"

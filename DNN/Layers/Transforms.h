@@ -44,78 +44,77 @@ namespace Transforms
 	
 	/* NOP */
 	long double identity(long double x);
-	Matrix& identitym(Matrix& x);
+	template<class T> IMatrix <T>& identitym(IMatrix<T>& x);
 	long double identityDerivative(long double x);
-	Matrix& identityDerivativem(Matrix& x);
-	/* Sigmoid */
-	long double sigmoid(long double x);
-	Matrix& sigmoidm(Matrix& x);
-	long double sigmoidDerivative(long double x);
-	Matrix& sigmoidDerivativem(Matrix& x);
-	/* ReLU */
-	long double relu(long double x);
-	Matrix& relum(Matrix& x);
-	long double reluDerivative(long double x);
-	Matrix& reluDerivativem(Matrix& x);
-	/* LeakyReLU */
-	long double leakyRelu(long double x);
-	Matrix& leakyRelum(Matrix& x);
-	long double leakyReluDerivative(long double x);
-	Matrix& leakyReluDerivativem(Matrix& x);
-	/* Relu6 */
-	long double relu6(long double x);
-	Matrix& relu6m(Matrix& x);
-	long double relu6Derivative(long double x);
-	Matrix& relu6Derivativem(Matrix& x);
-	/* ELU */
-	long double elu(long double x);
-	Matrix& elum(Matrix& x);
-	long double eluDerivative(long double x);
-	Matrix& eluDerivativem(Matrix& x);
-	/* Scaled ELU */
-	long double selu(long double x);
-	Matrix& selum(Matrix& x);
-	long double seluDerivative(long double x);
-	Matrix& seluDerivativem(Matrix& x);
-	/* Gaussian ELU */
-	long double gelu(long double x);
-	Matrix& gelum(Matrix& x);
-	long double geluDerivative(long double x);
-	Matrix& geluDerivativem(Matrix& x);
-	/* Cube */
-	long double cube(long double x);
-	Matrix& cubem(Matrix& x);
-	long double cubeDerivative(long double x);
-	Matrix& cubeDerivativem(Matrix& x);
-	/* Swish */
-	long double swish(long double x);
-	Matrix& swishm(Matrix& x);
-	long double swishDerivative(long double x);
-	Matrix& swishDerivativem(Matrix& x);
-	/* Softsign */
-	long double softsign(long double x);
-	Matrix& softsignm(Matrix& x);
-	long double softsignDerivative(long double x);
-	Matrix& softsignDerivativem(Matrix& x);
-	/* Softplus */
-	long double softplus(long double x);
-	Matrix& softplusm(Matrix& x);
-	long double softplusDerivative(long double x);
-	Matrix& softplusDerivativem(Matrix& x);
-	/* Softmax*/
-	long double* softmax(long double* data, const int count);
-	Matrix& softmax(Matrix& x);
-	Matrix& softmaxDerivative(Matrix& matrix);
+	template<class T> IMatrix<T>& identityDerivativem(IMatrix<T>& x);
+	///* Sigmoid */
+	//long double sigmoid(long double x);
+	//template<class T> IMatrix<T>& sigmoidm(IMatrix<T>& x);
+	//long double sigmoidDerivative(long double x);
+	//template<class T> IMatrix<T>& sigmoidDerivativem(IMatrix<T>& x);
+	///* ReLU */
+	//long double relu(long double x);
+	//template<class T> IMatrix<T>& relum(IMatrix<T>& x);
+	//long double reluDerivative(long double x);
+	//template<class T> IMatrix<T>& reluDerivativem(IMatrix<T>& x);
+	///* LeakyReLU */
+	//long double leakyRelu(long double x);
+	//template<class T> IMatrix<T>& leakyRelum(IMatrix<T>& x);
+	//long double leakyReluDerivative(long double x);
+	//template<class T> IMatrix<T>& leakyReluDerivativem(IMatrix<T>& x);
+	///* Relu6 */
+	//long double relu6(long double x);
+	//template<class T> IMatrix<T>& relu6m(IMatrix<T>& x);
+	//long double relu6Derivative(long double x);
+	//template<class T> IMatrix<T>& relu6Derivativem(IMatrix<T>& x);
+	///* ELU */
+	//long double elu(long double x);
+	//template<class T> IMatrix<T>& elum(IMatrix<T>& x);
+	//long double eluDerivative(long double x);
+	//template<class T> IMatrix<T>& eluDerivativem(IMatrix<T>& x);
+	///* Scaled ELU */
+	//long double selu(long double x);
+	//template<class T> IMatrix<T>& selum(IMatrix<T>& x);
+	//long double seluDerivative(long double x);
+	//template<class T> IMatrix<T>& seluDerivativem(IMatrix<T>& x);
+	///* Gaussian ELU */
+	//long double gelu(long double x);
+	//template<class T> IMatrix<T>& gelum(IMatrix<T>& x);
+	//long double geluDerivative(long double x);
+	//template<class T> IMatrix<T>& geluDerivativem(IMatrix<T>& x);
+	///* Cube */
+	//long double cube(long double x);
+	//template<class T> IMatrix<T>& cubem(IMatrix<T>& x);
+	//long double cubeDerivative(long double x);
+	//template<class T> IMatrix<T>& cubeDerivativem(IMatrix<T>& x);
+	///* Swish */
+	//long double swish(long double x);
+	//template<class T> IMatrix<T>& swishm(IMatrix<T>& x);
+	//long double swishDerivative(long double x);
+	//template<class T> IMatrix<T>& swishDerivativem(IMatrix<T>& x);
+	///* Softsign */
+	//long double softsign(long double x);
+	//template<class T> IMatrix<T>& softsignm(IMatrix<T>& x);
+	//long double softsignDerivative(long double x);
+	//template<class T> IMatrix<T>& softsignDerivativem(IMatrix<T>& x);
+	///* Softplus */
+	//long double softplus(long double x);
+	//template<class T> IMatrix<T>& softplusm(IMatrix<T>& x);
+	//long double softplusDerivative(long double x);
+	//template<class T> IMatrix<T>& softplusDerivativem(IMatrix<T>& x);
+	///* Softmax*/
+	//long double* softmax(long double* data, const int count);
+	//template<class T> IMatrix<T>& softmax(IMatrix<T>& x);
+	//template<class T> IMatrix<T>& softmaxDerivative(IMatrix<T>& matrix);
 
 	/* 
 		Loss Functions
 	*/
-
-	long double meanSquareLoss(Matrix& y, Matrix& truth);		// l2 loss
-	long double meanAbsoluteLoss(Matrix& y, Matrix& truth);		// l1 loss
-	long double smoothMeanAbsoluteLoss(Matrix& y, Matrix& truth);	// huber loss
-	long double logCoshLoss(Matrix& y, Matrix& truth);
-	long double crossEntropyLoss(Matrix& y, Matrix& truth);
-	/*long double kullbackLeiblerLoss(Matrix& y, Matrix& truth);*/
+	template<class T> long double meanSquareLoss(IMatrix<T>& y, IMatrix<T>& truth);		// l2 loss
+	template<class T> long double meanAbsoluteLoss(IMatrix<T>& y, IMatrix<T>& truth);		// l1 loss
+	template<class T> long double smoothMeanAbsoluteLoss(IMatrix<T>& y, IMatrix<T>& truth);	// huber loss
+	template<class T> long double logCoshLoss(IMatrix<T>& y, IMatrix<T>& truth);
+	template<class T> long double crossEntropyLoss(IMatrix<T>& y, IMatrix<T>& truth);
+	/*template<class T> long double kullbackLeiblerLoss(IMatrix<T>& y, IMatrix<T>& truth);*/
 };
 #endif

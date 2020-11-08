@@ -24,12 +24,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Matrix.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Vector.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
     <ClCompile Include="DNN\Initialisers\Initialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,15 +33,21 @@
     <ClCompile Include="DNN\Layers\Layers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Matrix\IMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Vector\Vector.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Vector\IVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Matrix\RMMatrix.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Models\Exceptions.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Matrix.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Vector.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="DNN\Initialisers\Initialiser.h">
@@ -59,14 +59,31 @@
     <ClInclude Include="DNN\Layers\Layers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Models\Matrix\IMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Vector\Vector.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Vector\IVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Matrix\RMMatrix.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\CRTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\Matrix.tpp">
-      <Filter>Source Files\Models</Filter>
-    </None>
-    <None Include="Models\Vector.tpp">
-      <Filter>Source Files\Models</Filter>
-    </None>
     <None Include="DNN\Layers\Layers.tpp" />
+    <None Include="Models\Vector\Vector.tpp">
+      <Filter>Source Files\Models</Filter>
+    </None>
+    <None Include="Models\Matrix\RMMatrix.tpp">
+      <Filter>Source Files\Models</Filter>
+    </None>
+    <None Include="Models\Matrix\IMatrix.tpp" />
+    <None Include="DNN\Initialisers\Initialiser.tpp" />
   </ItemGroup>
 </Project>

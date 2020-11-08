@@ -1,95 +1,122 @@
-#ifndef LAYER_H
-#define LAYER_H
+#ifndef LAYERS_H
+#define LAYERS_H
 
-using ActivationFunction = Matrix& (*)(Matrix&);
+template<class I>
+using ActivationFunction = I& (*)(I&);
 
-/* Interface */
-template<ActivationFunction Forward, ActivationFunction Backward>
+template<class I, ActivationFunction<I> F, ActivationFunction<I> B>
 class Layer
 {
 protected:
-	Matrix* previousActivation{ nullptr }, * error{ nullptr }, * delta{ nullptr };
-	Matrix& weights;
+	I& weights, * previousActivation{ nullptr }, * error{ nullptr }, * delta{ nullptr };
 	Vector& bias;
 public:
 	const int inputs, neurons;
 
-	Layer(int inputs, int neurons, Matrix& weights, Vector& bias);
+	Layer(int inputs, int neurons, I& weights, Vector& bias);
 	~Layer();
 
-	Matrix& activate(Matrix& x);
-	Matrix& applyActivation(Matrix& x) { return Forward(x); };
-	Matrix& applyActivationDerivative(Matrix& x) { return Backward(x); };
+	I& activate(I& x);
+	I& applyActivation(I& x) { return F(x); };
+	I& applyActivationDerivative(I& x) { return B(x); };
 };
 
 namespace Layers
 {
-	struct NOP : public Layer<Transforms::identitym, Transforms::identityDerivativem>
+	template<class I>
+	struct NOP : public Layer<I, Transforms::identitym, Transforms::identityDerivativem>
 	{
-		NOP(int inputs, int neurons, Matrix& weights, Vector& bias) 
+		NOP(int inputs, int neurons, I& weights, Vector& bias) 
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Sigmoid : public Layer<Transforms::sigmoidm, Transforms::sigmoidDerivativem>
+
+	/*
+	template<class I>
+	struct Sigmoid : public Layer<I, Transforms::sigmoidm, Transforms::sigmoidDerivativem>
 	{
-		Sigmoid(int inputs, int neurons, Matrix& weights, Vector & bias)
+		Sigmoid(int inputs, int neurons, IMatrix<I>& weights, Vector & bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Relu : public Layer<Transforms::relum, Transforms::reluDerivativem>
+
+	
+	template<class I>
+	struct Relu : public Layer<I, Transforms::relum, Transforms::reluDerivativem>
 	{
-		Relu(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Relu(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct LeakyRelu : public Layer<Transforms::leakyRelum, Transforms::leakyReluDerivativem>
+
+	template<class I>
+	struct LeakyRelu : public Layer<I, Transforms::leakyRelum, Transforms::leakyReluDerivativem>
 	{
-		LeakyRelu(int inputs, int neurons, Matrix& weights, Vector& bias)
+		LeakyRelu(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Relu6 : public Layer<Transforms::relu6m, Transforms::relu6Derivativem>
+	
+	template<class I>
+	struct Relu6 : public Layer<I, Transforms::relu6m, Transforms::relu6Derivativem>
 	{
-		Relu6(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Relu6(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Elu : public Layer<Transforms::elum, Transforms::eluDerivativem>
+
+	template<class I>
+	struct Elu : public Layer<I, Transforms::elum, Transforms::eluDerivativem>
 	{
-		Elu(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Elu(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Selu : public Layer<Transforms::selum, Transforms::seluDerivativem>
+
+	template<class I>
+	struct Selu : public Layer<I, Transforms::selum, Transforms::seluDerivativem>
 	{
-		Selu(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Selu(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Gelu : public Layer<Transforms::gelum, Transforms::geluDerivativem>
+
+	template<class I>
+	struct Gelu : public Layer<I, Transforms::gelum, Transforms::geluDerivativem>
 	{
-		Gelu(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Gelu(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Cube : public Layer<Transforms::cubem, Transforms::cubeDerivativem>
+
+	template<class I>
+	struct Cube : public Layer<I, Transforms::cubem, Transforms::cubeDerivativem>
 	{
-		Cube(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Cube(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Swish : public Layer<Transforms::swishm, Transforms::swishDerivativem>
+
+	template<class I>
+	struct Swish : public Layer<I, Transforms::swishm, Transforms::swishDerivativem>
 	{
-		Swish(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Swish(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Softsign : public Layer<Transforms::softsignm, Transforms::softsignDerivativem>
+
+	template<class I>
+	struct Softsign : public Layer<I, Transforms::softsignm, Transforms::softsignDerivativem>
 	{
-		Softsign(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Softsign(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Softplus : public Layer<Transforms::softplusm, Transforms::softplusDerivativem>
+
+	template<class I>
+	struct Softplus : public Layer<I, Transforms::softplusm, Transforms::softplusDerivativem>
 	{
-		Softplus(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Softplus(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
 	};
-	struct Softmax : public Layer<Transforms::softmax, Transforms::softmaxDerivative>
+
+	template<class I>
+	struct Softmax : public Layer<I, Transforms::softmax, Transforms::softmaxDerivative>
 	{
-		Softmax(int inputs, int neurons, Matrix& weights, Vector& bias)
+		Softmax(int inputs, int neurons, IMatrix<I>& weights, Vector& bias)
 			: Layer(inputs, neurons, weights, bias) {}
-	};
+	};*/
+
 };
 #include "Layers.tpp"
 
-#endif // !LAYER_H
+#endif // !LAYERS_H

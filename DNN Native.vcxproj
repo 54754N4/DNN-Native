@@ -143,21 +143,28 @@
     <ClCompile Include="DNN\Layers\Layers.cpp" />
     <ClCompile Include="DNN\Layers\Transforms.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Models\Matrix.cpp" />
-    <ClCompile Include="Models\Vector.cpp" />
+    <ClCompile Include="Models\Matrix\IMatrix.cpp" />
+    <ClCompile Include="Models\Matrix\RMMatrix.cpp" />
+    <ClCompile Include="Models\Vector\IVector.cpp" />
+    <ClCompile Include="Models\Vector\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DNN\Initialisers\Initialiser.h" />
     <ClInclude Include="DNN\Layers\Layers.h" />
     <ClInclude Include="DNN\Layers\Transforms.h" />
+    <ClInclude Include="Models\CRTP.h" />
     <ClInclude Include="Models\Exceptions.h" />
-    <ClInclude Include="Models\Matrix.h" />
-    <ClInclude Include="Models\Vector.h" />
+    <ClInclude Include="Models\Matrix\IMatrix.h" />
+    <ClInclude Include="Models\Matrix\RMMatrix.h" />
+    <ClInclude Include="Models\Vector\IVector.h" />
+    <ClInclude Include="Models\Vector\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DNN\Initialisers\Initialiser.tpp" />
     <None Include="DNN\Layers\Layers.tpp" />
-    <None Include="Models\Matrix.tpp" />
-    <None Include="Models\Vector.tpp" />
+    <None Include="Models\Matrix\IMatrix.tpp" />
+    <None Include="Models\Matrix\RMMatrix.tpp" />
+    <None Include="Models\Vector\Vector.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

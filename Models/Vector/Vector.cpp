@@ -2,72 +2,97 @@
 #include <string>
 #include <iostream>
 #include <math.h>
+#include "IVector.h"
 #include "Vector.h"
-#include "Exceptions.h"
+#include "../Exceptions.h"
 
 /* Constructors and destructor */
-inline Vector::Vector() : count(0)
-{
-	data = nullptr;
-}
+inline Vector::Vector() 
+	: IVector() {}
 
-Vector::Vector(int size) :  count(size)
+Vector::Vector(int size) 
+	: IVector(size), data(new long double[size])
 {
 	initialize(0);
 }
 
-Vector::Vector(int size, const double initial) : count(size)
+Vector::Vector(int size, const double initial) 
+	: IVector(size), data(new long double[size])
 {
 	initialize(initial);
 }
 
-Vector::Vector(long double* data, int count) : count(count)
+Vector::Vector(long double* data, int count) 
+	: IVector(count), data(new long double[count])
 {
 	slice(data);
 }
 
-Vector::Vector(const Vector& vector) : count(vector.count)
-{
-	data = new long double[count];
-	for (int i = 0; i < count; ++i)
-		data[i] = vector.data[i];
-}
-
 Vector::~Vector() 
 {
-	delete[] data;
+	if (data != nullptr)
+		delete[] data;
 }
 
+/* Move semantics */
+
+Vector::Vector(const Vector& vector)					// copy ctor
+	: IVector(vector.count), data(new long double[vector.count])
+{
+	std::copy(vector.data, vector.data + vector.count, data);
+}
+
+Vector::Vector(Vector&& vector) noexcept				// move ctor
+{ 
+	*this = std::move(vector);
+}
+
+Vector& Vector::operator=(const Vector& vector)			// copy op
+{
+	if (this != &vector)
+	{
+		if (count != vector.count)
+		{
+			if (data != nullptr)
+				delete[] data;
+			data = new long double[vector.count];
+		}
+		count = vector.count;
+		std::copy(vector.data, vector.data + count, data);
+	}
+	return *this;
+}
+
+Vector& Vector::operator=(Vector&& vector) noexcept		// move op
+{	
+	if (this != &vector)
+	{
+		if (data != nullptr)
+			delete[] data;
+		count = vector.count;
+		data = vector.data;
+		vector.count = 0;
+		vector.data = nullptr;
+	}
+	return *this;
+} 
+
+
 /* Utility methods */
+
 void Vector::initialize(const long double value)
 {
-	data = new long double[count];
 	for (int i = 0; i < count; ++i)
 		data[i] = value;
 }
 
 void Vector::slice(long double* elements)
 {
-	data = new long double[count];
 	for (int i = 0; i < count; ++i)
 		data[i] = elements[i];
 }
 
 /* Accessors */
-bool Vector::isRow()
-{
-	return row;
-}
-
-bool Vector::isColumn()
-{
-	return !row;
-}
-
-int Vector::getLength()
-{
-	return count;
-}
 
 bool Vector::isZero()
 {
@@ -94,57 +119,57 @@ long double Vector::getNorm()
 	return sqrt(norm);
 }
 
-Vector& Vector::normalize()
+IVector& Vector::normalize()
 {
 	return *this * (1 / getNorm());
 }
 
-long double Vector::dotProduct(Vector& vector)
+long double Vector::dotProduct(IVector& vector)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
 	long double dotProduct = 0;
 	for (int i = 0; i < count; ++i)
-		dotProduct += data[i] * vector.data[i];
+		dotProduct += data[i] * vector[i];
 	return dotProduct;
 }
 
-Vector& Vector::hadamardProduct(Vector& vector, bool inPlace)
+IVector& Vector::hadamardProduct(IVector& vector, bool inPlace)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
 	Vector* ptr = inPlace ? this : new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*ptr)[i] = data[i] * vector.data[i];
+		(*ptr)[i] = data[i] * vector[i];
 	return *ptr;
 }
 
-Vector& Vector::transpose(bool inPlace)
+IVector& Vector::transpose(bool inPlace)
 {
 	Vector* ptr = inPlace ? this : new Vector(count);
 	ptr->row = !row;
 	return *ptr;
 }
 
-const bool Vector::equals(Vector& vector)
+const bool Vector::equals(IVector& vector)
 {
 	for (int i = 0; i < count; ++i)
-		if (data[i] != vector.data[i])
+		if (data[i] != vector[i])
 			return false;
 	return true;
 }
 
-inline Vector& Vector::plus(Vector& vector, bool inPlace)
+inline IVector& Vector::plus(IVector& vector, bool inPlace)
 {
 	if (count != vector.count)
 		throw VectorsDifferentDimensionError(count, vector.count);
 	Vector* ptr = inPlace ? this : new Vector(count);
 	for (int i = 0; i < count; ++i)
-		(*ptr)[i] = data[i] + vector.data[i];
+		(*ptr)[i] = data[i] + vector[i];
 	return *ptr;
 }
 
-inline Vector& Vector::times(long double scalar, bool inPlace)
+inline IVector& Vector::times(long double scalar, bool inPlace)
 {
 	Vector* ptr = inPlace ? this : new Vector(count);
 	for (int i = 0; i < count; ++i)
@@ -152,32 +177,32 @@ inline Vector& Vector::times(long double scalar, bool inPlace)
 	return *ptr;
 }
 
-inline Vector& Vector::minus(Vector& vector, bool inPlace)
+inline IVector& Vector::minus(IVector& vector, bool inPlace)
 {
 	return this->plus(vector.times(-1, inPlace), inPlace);
 }
 
-inline Vector& Vector::times(Vector& vector, bool inPlace)
+inline IVector& Vector::times(IVector& vector, bool inPlace)
 {
 	return hadamardProduct(vector, inPlace);
 }
 
-Vector& Vector::operator+(Vector& vector) 
+IVector& Vector::operator+(IVector& vector) 
 {
 	return plus(vector);
 }
 
-Vector& Vector::operator*(long double scalar) 
+IVector& Vector::operator*(long double scalar) 
 {
 	return times(scalar);
 }
 
-Vector& Vector::operator-(Vector& vector)
+IVector& Vector::operator-(IVector& vector)
 {
 	return minus(vector);
 }
 
-Vector& Vector::operator*(Vector& vector)
+IVector& Vector::operator*(IVector& vector)
 {
 	return hadamardProduct(vector);
 }
